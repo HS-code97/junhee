@@ -9,8 +9,13 @@
   }
 
   body {
-    background-color: #f7f8fc;
-    color: #191f28;
+    background-color: #f7f5fc;
+    background-image:
+      radial-gradient(circle at 12% 8%, rgba(232, 222, 252, 0.55) 0%, transparent 42%),
+      radial-gradient(circle at 88% 18%, rgba(253, 232, 242, 0.5) 0%, transparent 40%),
+      radial-gradient(circle at 50% 92%, rgba(226, 241, 248, 0.42) 0%, transparent 46%);
+    background-attachment: fixed;
+    color: #231e33;
     overscroll-behavior-y: none;
     word-break: keep-all;
   }
@@ -20,6 +25,27 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* Soft glassmorphism surfaces inspired by airy pastel stationery UI */
+.glass-card {
+  background: rgba(255, 255, 255, 0.84);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 28px -12px rgba(126, 107, 184, 0.14), 0 1px 2px rgba(126, 107, 184, 0.05);
+}
+
+.glass-bar {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.glass-sheet {
+  background: rgba(255, 255, 255, 0.93);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 -12px 44px -10px rgba(126, 107, 184, 0.22);
+}
+
 /* Hide scrollbars on horizontal filter chip bars while keeping smooth touch scroll */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
@@ -27,6 +53,22 @@
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Soft thin scrollbar for university dropdowns and modal sheets */
+.soft-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.soft-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.soft-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(169, 152, 214, 0.45);
+  border-radius: 9999px;
+}
+.soft-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(142, 122, 198, 0.7);
 }
 
 /* Safe area padding for iPhone notch / home indicator */
@@ -53,7 +95,7 @@
 @keyframes slideUpSheet {
   from {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(28px);
   }
   to {
     opacity: 1;
@@ -62,5 +104,39 @@
 }
 
 .animate-sheet-up {
-  animation: slideUpSheet 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: slideUpSheet 0.26s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes resultPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(219, 111, 158, 0.38);
+    transform: scale(0.992);
+  }
+  45% {
+    box-shadow: 0 0 0 8px rgba(168, 147, 224, 0.16);
+    transform: scale(1.006);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(168, 147, 224, 0);
+    transform: scale(1);
+  }
+}
+
+.animate-result-pulse {
+  animation: resultPulse 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-pop-in {
+  animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

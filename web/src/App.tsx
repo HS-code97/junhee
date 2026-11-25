@@ -26,6 +26,7 @@ import {
 import {
   EXCEL_DOWNLOAD_FILENAME,
   EXCEL_DOWNLOAD_URL,
+  grade5ToCumPct,
 } from './lib/simulatorEngine';
 
 const STORAGE_PROFILE_KEY = 'suryeon2029_profile_v1';
@@ -34,16 +35,22 @@ const STORAGE_SKIP_INTRO_KEY = 'suryeon2029_skip_intro_v1';
 
 const DEFAULT_PROFILE: StudentProfile = {
   grade5: 1.15,
-  customCumPct: null,
+  customCumPct: 7.5,
   mockPct: 94.0,
 };
 
 export const App: React.FC = () => {
-  // Persisted states
+  // Persisted states (backfill customCumPct with interpolated value if older saved profile had null)
   const [profile, setProfile] = useState<StudentProfile>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_PROFILE_KEY);
-      if (saved) return { ...DEFAULT_PROFILE, ...JSON.parse(saved) };
+      if (saved) {
+        const parsed = { ...DEFAULT_PROFILE, ...JSON.parse(saved) } as StudentProfile;
+        if (parsed.customCumPct === null || Number.isNaN(parsed.customCumPct)) {
+          parsed.customCumPct = Math.round(grade5ToCumPct(parsed.grade5) * 10) / 10;
+        }
+        return parsed;
+      }
     } catch {
       /* ignore */
     }
@@ -224,13 +231,13 @@ export const App: React.FC = () => {
   if (loadError) {
     return (
       <div className="flex min-h-screen items-center justify-center p-6 text-center">
-        <div className="max-w-sm rounded-3xl bg-white p-6 shadow-lg ring-1 ring-rose-100">
-          <p className="text-base font-extrabold text-rose-600">데이터 로드 중 오류가 발생했습니다</p>
-          <p className="mt-2 text-xs text-slate-500">{loadError}</p>
+        <div className="glass-card max-w-sm rounded-[26px] p-6 ring-1 ring-[#F4CBE0]">
+          <p className="text-base font-extrabold text-[#BD4F82]">데이터 로드 중 오류가 발생했습니다</p>
+          <p className="mt-2 text-xs text-[#6F6785]">{loadError}</p>
           <button
             type="button"
             onClick={() => window.location.reload()}
-            className="mt-4 rounded-xl bg-indigo-600 px-4 py-2 text-xs font-bold text-white"
+            className="mt-4 rounded-xl bg-gradient-to-r from-[#9582D1] to-[#DF7BA6] px-4 py-2 text-xs font-bold text-white"
           >
             다시 시도
           </button>
@@ -240,7 +247,7 @@ export const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F7F8FC] text-[#191F28] overflow-x-hidden">
+    <div className="min-h-screen flex flex-col text-[#231E33] overflow-x-hidden">
       {/* Onboarding / Loading Overlay */}
       {(showOnboarding || simLoading) && (
         <IntroOnboarding
@@ -307,23 +314,23 @@ export const App: React.FC = () => {
         )}
 
         {/* Warm Footer Credit + Secondary Excel Download */}
-        <footer className="mt-10 rounded-3xl bg-white/80 p-5 text-center ring-1 ring-slate-200/70 space-y-2.5">
+        <footer className="glass-card mt-10 rounded-[26px] p-5 text-center ring-1 ring-[#EAE3F7]/90 space-y-2.5">
           <button
             type="button"
             onClick={() => setShowDedication(true)}
-            className="inline-flex items-center gap-1.5 rounded-full bg-rose-50 px-3 py-1 text-xs font-bold text-rose-600 ring-1 ring-rose-100 hover:bg-rose-100 transition"
+            className="inline-flex items-center gap-1.5 rounded-full bg-[#FDF0F6] px-3.5 py-1 text-xs font-bold text-[#BD4F82] ring-1 ring-[#F4CBE0] hover:bg-[#FCE4EF] transition"
           >
-            <Heart className="h-3.5 w-3.5 fill-rose-500" />
+            <Heart className="h-3.5 w-3.5 fill-[#DF7BA6] text-[#DF7BA6]" />
             동탄에서 아빠 김준희가 딸 김수련의 스무 살 봄을 응원하며 만든 2029 입시 나침반
           </button>
-          <p className="text-[11px] leading-relaxed text-slate-400">
+          <p className="text-[11px] leading-relaxed text-[#8E86A3]">
             서울 주요 13개 대학 본캠퍼스 정원 내 일반전형 · 각 대학 입학처 공식 자료 및 대입정보포털 어디가(adiga.kr) 기반 · 최종 지원 시 반드시 각 대학 모집요강 원문을 확인하세요.
           </p>
           <div className="pt-1">
             <a
               href={EXCEL_DOWNLOAD_URL}
               download={EXCEL_DOWNLOAD_FILENAME}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-50 px-3.5 py-2 text-xs font-extrabold text-emerald-700 ring-1 ring-emerald-200 hover:bg-emerald-100 transition"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-[#EAF7F3] px-3.5 py-2 text-xs font-extrabold text-[#257466] ring-1 ring-[#C2E7DC] hover:bg-[#DCF2EC] transition"
             >
               <Download className="h-3.5 w-3.5" />
               원본 6시트 엑셀 파일(서울13개대학_3개년입결_2029맞춤DB.xlsx) 내려받기
@@ -341,7 +348,7 @@ export const App: React.FC = () => {
         }}
       />
 
-      {/* Department 3-Year Detail + 2028 Reform Bottom Sheet */}
+      {/* Department 3-Year Detail + 2028 Reform Glass Bottom Sheet */}
       <DeptDetailSheet
         target={detailTarget}
         onClose={() => setDetailTarget(null)}
