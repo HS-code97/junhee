@@ -330,9 +330,9 @@ export const App: React.FC = () => {
             <a
               href={EXCEL_DOWNLOAD_URL}
               download={EXCEL_DOWNLOAD_FILENAME}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-[#F3F2F7] px-3.5 py-2 text-xs font-extrabold text-[#1F1B2C] ring-1 ring-[#E4E2EC] hover:bg-[#EAE8F2] transition"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-[#E6F5F2] px-3.5 py-2 text-xs font-extrabold text-[#1E6F64] ring-1 ring-[#C3E6DF] hover:bg-[#D6EFEA] transition"
             >
-              <Download className="h-3.5 w-3.5 text-[#5F5A70]" />
+              <Download className="h-3.5 w-3.5 text-[#22746A]" />
               원본 6시트 엑셀 파일(서울13개대학_3개년입결_2029맞춤DB.xlsx) 내려받기
             </a>
           </div>

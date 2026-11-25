@@ -212,7 +212,7 @@ export const IntroOnboarding: React.FC<IntroOnboardingProps> = ({
                 <div>
                   <span className="text-xs font-bold text-[#6350A8]">사용법 2 / 3 · 내 성적 입력 팁</span>
                   <h2 className="mt-1 text-lg font-extrabold text-[#1F1B2C]">
-                    3개 숫자를 넣고 조회 버튼을 누르면
+                    수시·정시 2개만 넣고 조회 버튼을 누르면
                     <br />
                     1,854개 학과를 한눈에 판정해요
                   </h2>
@@ -220,22 +220,18 @@ export const IntroOnboarding: React.FC<IntroOnboardingProps> = ({
 
                 <div className="space-y-2 text-[12.5px]">
                   <div className="rounded-xl bg-[#F6F5FA] p-3">
-                    <div className="font-bold text-[#1F1B2C]">① 5등급제 내신 평균 (1.00 ~ 5.00)</div>
-                    <p className="mt-0.5 text-[#5F5A70]">내신 평균을 바꾸면 ②번 추정 상위 누적(%)도 자동으로 연동됩니다.</p>
-                  </div>
-                  <div className="rounded-xl bg-[#F6F5FA] p-3">
                     <div className="flex items-center justify-between">
-                      <span className="font-bold text-[#1F1B2C]">② 추정 상위 누적 백분위(%)</span>
+                      <span className="font-bold text-[#1F1B2C]">① 수시 · 5등급제 내신 평균 (상위 누적% 양방향 연동)</span>
                       <span className="rounded-full bg-[#1F1B2C] px-2 py-0.5 text-[10px] font-bold text-white">
                         Z계산기 내장
                       </span>
                     </div>
                     <p className="mt-1 text-[#5F5A70] leading-relaxed">
-                      1등급(상위 10%) 안에서 더 정밀하게 보고 싶을 때 <strong>[Z계산기]</strong>나 직접 입력으로 미세 조정할 수 있어요.
+                      내신 평균을 조절하면 하위 <strong>추정 상위 누적(%)</strong>이 즉시 따라 바뀌고, 반대로 상위 누적(%)을 수정하면 내신 평균도 자동으로 역산 연동됩니다.
                     </p>
                   </div>
                   <div className="rounded-xl bg-[#F6F5FA] p-3">
-                    <div className="font-bold text-[#1F1B2C]">③ 모의고사 국수탐 평균 백분위 (정시용)</div>
+                    <div className="font-bold text-[#1F1B2C]">② 정시 · 모의고사 국수탐 평균 백분위</div>
                     <p className="mt-0.5 text-[#5F5A70]">
                       통합수능 개편으로 과거 환산점수 대신 <strong>3개년 국수탐 백분위 70%컷</strong>과 비교해 상대 위치를 알려줘요.
                     </p>

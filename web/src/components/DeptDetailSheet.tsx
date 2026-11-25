@@ -345,7 +345,7 @@ export const DeptDetailSheet: React.FC<DeptDetailSheetProps> = ({
                     <th className="py-2.5 px-2 text-right font-bold">경쟁률</th>
                     <th className="py-2.5 px-2 text-right font-bold">충원</th>
                     <th className="py-2.5 px-2 text-right font-bold">환산70%(만점)</th>
-                    <th className="py-2.5 px-2 text-right font-bold text-[#6350A8]">백분위50%</th>
+                    <th className="py-2.5 px-2 text-right font-bold text-[#22746A]">백분위50%</th>
                     <th className="py-2.5 px-2 text-right font-bold text-[#D45D92]">백분위70%</th>
                     <th className="py-2.5 px-2 text-right font-bold">영어(9등급)</th>
                   </tr>
@@ -373,7 +373,7 @@ export const DeptDetailSheet: React.FC<DeptDetailSheetProps> = ({
                             ? `${r.s70.toFixed(2)}${r.sMax ? ` / ${r.sMax}` : ''}`
                             : '-'}
                         </td>
-                        <td className="py-2.5 px-2 text-right font-semibold text-[#6350A8]">
+                        <td className="py-2.5 px-2 text-right font-semibold text-[#22746A]">
                           {fmt(r.p50)}
                         </td>
                         <td className="py-2.5 px-2 text-right font-extrabold text-[#D45D92]">

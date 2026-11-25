@@ -34,6 +34,24 @@ export function grade5ToCumPct(grade5: number): number {
 }
 
 /**
+ * 상위 누적 백분위(%) → 5등급제 내신 평균(1.00~5.00) 역산
+ * (상위 5.0% 이내는 5등급제 1등급 중앙 이하 구간이므로 1.00등급으로 매핑)
+ */
+export function cumPctToGrade5(cumPct: number): number {
+  if (cumPct <= G5_TABLE[0].mid) return 1.0;
+  if (cumPct >= G5_TABLE[4].mid) return 5.0;
+  for (let i = 0; i < 4; i++) {
+    const cur = G5_TABLE[i];
+    const next = G5_TABLE[i + 1];
+    if (cumPct <= next.mid) {
+      const g = cur.grade + (cumPct - cur.mid) / (next.mid - cur.mid);
+      return Math.round(g * 100) / 100;
+    }
+  }
+  return 5.0;
+}
+
+/**
  * 엑셀 Sheet 4 K17:K... 수식 1:1 구현:
  * 9등급제 3개년 평균 70%컷 → 구간 중앙값 선형 보간 요구 상위 누적 백분위(%)
  */

@@ -100,23 +100,23 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
 
   return (
     <div className="space-y-4">
-      {/* Header Banner — Unified Flat Pastel Lavender */}
-      <div className="rounded-[24px] bg-[#E4DBFA] p-4.5 text-[#1F1B2C]">
+      {/* Header Banner — Flat Solid Soft Mint */}
+      <div className="rounded-[24px] bg-[#DFF2EE] p-4.5 text-[#1B2B29]">
         <div className="flex items-start justify-between gap-2">
           <div>
-            <span className="inline-flex items-center gap-1 rounded-full bg-white/80 px-2.5 py-0.5 text-[10.5px] font-bold text-[#494459]">
-              <Sparkles className="h-3 w-3 text-[#D45D92]" />
+            <span className="inline-flex items-center gap-1 rounded-full bg-white/80 px-2.5 py-0.5 text-[10.5px] font-bold text-[#22746A]">
+              <Sparkles className="h-3 w-3 text-[#22746A]" />
               엑셀 3번 시트 · 환산점수 / 국수탐 백분위 분리
             </span>
-            <h2 className="mt-1.5 text-lg font-extrabold tracking-tight text-[#1F1B2C]">
+            <h2 className="mt-1.5 text-lg font-extrabold tracking-tight text-[#1B2B29]">
               정시 3개년(2024~2026) 입결 DB 조회
             </h2>
           </div>
-          <span className="shrink-0 whitespace-nowrap rounded-2xl bg-white/80 px-3 py-1.5 text-xs font-extrabold text-[#1F1B2C] tabular-nums">
+          <span className="shrink-0 whitespace-nowrap rounded-2xl bg-white/80 px-3 py-1.5 text-xs font-extrabold text-[#1E6F64] tabular-nums">
             총 {rows.length.toLocaleString()}건
           </span>
         </div>
-        <p className="mt-1 text-xs font-medium text-[#4E4766]">
+        <p className="mt-1 text-xs font-medium text-[#3C5C57]">
           가·나·다군 대학별 환산점수(50%·70%컷) 및 수능 국수탐 백분위(높을수록 상위 · 만점 100) 원천 데이터
         </p>
       </div>
@@ -356,7 +356,7 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
                     </div>
                     <div className="mt-1 flex items-baseline justify-between text-xs">
                       <span className="text-[#7A748A]">50%컷</span>
-                      <span className="font-bold text-[#6350A8]">{fmt(r.p50)}</span>
+                      <span className="font-bold text-[#22746A]">{fmt(r.p50)}</span>
                     </div>
                     <div className="flex items-baseline justify-between text-xs">
                       <span className="text-[#5F5A70]">70%컷</span>
@@ -381,7 +381,7 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
                 <th className="py-2.5 px-2 text-right font-extrabold">경쟁률</th>
                 <th className="py-2.5 px-2 text-right font-extrabold">만점</th>
                 <th className="py-2.5 px-2 text-right font-extrabold">환산70%</th>
-                <th className="py-2.5 px-2 text-right font-extrabold text-[#6350A8]">백분위50%</th>
+                <th className="py-2.5 px-2 text-right font-extrabold text-[#22746A]">백분위50%</th>
                 <th className="py-2.5 px-2 text-right font-extrabold text-[#D45D92]">백분위70%</th>
                 <th className="py-2.5 px-2 text-right font-extrabold">영어(9등급)</th>
               </tr>
@@ -410,7 +410,7 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
                   <td className="py-2 px-2 text-right text-[#494459]">{fmt(r.rate)}</td>
                   <td className="py-2 px-2 text-right text-[#8C879C]">{fmtInt(r.sMax)}</td>
                   <td className="py-2 px-2 text-right font-bold text-[#1F1B2C]">{fmt(r.s70)}</td>
-                  <td className="py-2 px-2 text-right font-semibold text-[#6350A8]">{fmt(r.p50)}</td>
+                  <td className="py-2 px-2 text-right font-semibold text-[#22746A]">{fmt(r.p50)}</td>
                   <td className="py-2 px-2 text-right font-extrabold text-[#D45D92]">{fmt(r.p70)}</td>
                   <td className="py-2 px-2 text-right text-[#494459]">{fmt(r.eng, 1)}</td>
                 </tr>

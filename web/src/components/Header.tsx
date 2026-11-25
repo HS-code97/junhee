@@ -75,9 +75,9 @@ export const Header: React.FC<HeaderProps> = ({
             href={EXCEL_DOWNLOAD_URL}
             download={EXCEL_DOWNLOAD_FILENAME}
             title="6시트 완성형 원본 엑셀(.xlsx) 내려받기"
-            className="inline-flex shrink-0 items-center gap-1 rounded-xl bg-[#F3F2F7] px-2.5 py-1.5 text-xs font-bold text-[#1F1B2C] whitespace-nowrap ring-1 ring-[#E4E2EC] transition hover:bg-[#EAE8F2] active:scale-95"
+            className="inline-flex shrink-0 items-center gap-1 rounded-xl bg-[#E6F5F2] px-2.5 py-1.5 text-xs font-bold text-[#1E6F64] whitespace-nowrap ring-1 ring-[#C3E6DF] transition hover:bg-[#D6EFEA] active:scale-95"
           >
-            <Download className="h-3.5 w-3.5 shrink-0 text-[#5F5A70]" />
+            <Download className="h-3.5 w-3.5 shrink-0 text-[#22746A]" />
             <span className="hidden sm:inline">원본 엑셀</span>
             <span className="sm:hidden">엑셀</span>
           </a>

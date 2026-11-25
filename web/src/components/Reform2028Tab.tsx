@@ -209,7 +209,7 @@ export const Reform2028Tab: React.FC<Reform2028TabProps> = ({
               <a
                 href={EXCEL_DOWNLOAD_URL}
                 download={EXCEL_DOWNLOAD_FILENAME}
-                className="mt-1 inline-flex items-center gap-1 text-xs font-extrabold text-[#D45D92] hover:underline"
+                className="mt-1 inline-flex items-center gap-1 text-xs font-extrabold text-[#22746A] hover:underline"
               >
                 <Download className="h-3.5 w-3.5" />
                 6시트 다운로드
@@ -249,7 +249,7 @@ export const Reform2028Tab: React.FC<Reform2028TabProps> = ({
                     <td className="py-2 px-2 text-right text-[#5F5A70]">{d.j24}</td>
                     <td className="py-2 px-2 text-right text-[#5F5A70]">{d.j25}</td>
                     <td className="py-2 px-2 text-right text-[#5F5A70]">{d.j26}</td>
-                    <td className="py-2 px-2 text-right font-bold text-[#1F1B2C]">{d.jTotal}</td>
+                    <td className="py-2 px-2 text-right font-bold text-[#22746A]">{d.jTotal}</td>
                     <td className="py-2 px-2 text-center">
                       <span
                         className={`rounded-full px-2 py-0.5 text-[10.5px] font-bold ${

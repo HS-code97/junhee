@@ -289,7 +289,7 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
           </div>
         </div>
         <p className="mt-1 text-xs font-medium text-[#4E4766]">
-          아래 3개 성적을 입력하고 <strong>[맞춤 판정 조회하기]</strong>를 누르면 안정·적정·소신·상향 결과를 바로 확인할 수 있어요.
+          아래 수시·정시 2개 성적을 입력하고 <strong>[맞춤 판정 조회하기]</strong>를 누르면 안정·적정·소신·상향 결과를 바로 확인할 수 있어요.
         </p>
       </div>
 
@@ -335,6 +335,7 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
               : 'text-[#5F5A70] hover:text-[#1F1B2C]'
           }`}
         >
+          <span className="h-2 w-2 rounded-full bg-[#9B88D8]" />
           수시 맞춤 판정
           <span
             className={`rounded-full px-2 py-0.5 text-[11px] font-bold tabular-nums ${
@@ -358,6 +359,7 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
               : 'text-[#5F5A70] hover:text-[#1F1B2C]'
           }`}
         >
+          <span className="h-2 w-2 rounded-full bg-[#3BA395]" />
           정시 맞춤 판정
           <span
             className={`rounded-full px-2 py-0.5 text-[11px] font-bold tabular-nums ${
@@ -823,7 +825,7 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                   </div>
                   <div>
                     <div className="text-[10px] font-semibold text-[#686378]">내 모의 백분위</div>
-                    <div className="mt-0.5 text-sm font-extrabold text-[#6350A8]">
+                    <div className="mt-0.5 text-sm font-extrabold text-[#22746A]">
                       {profile.mockPct.toFixed(1)}
                     </div>
                     <div className="text-[9.5px] font-medium text-[#938DA3]">만점 100</div>
