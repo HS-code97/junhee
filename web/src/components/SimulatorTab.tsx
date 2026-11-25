@@ -8,6 +8,7 @@ import {
   X,
   CheckCircle2,
   Sparkles,
+  Info,
 } from 'lucide-react';
 import type {
   JeongsiJudgment,
@@ -84,7 +85,7 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
 
     const nextEff = getEffectiveStudentCumPct(next.grade5, next.customCumPct);
     setAppliedBanner(
-      `내신 ${next.grade5.toFixed(2)}등급 · 상위 ${nextEff.toFixed(1)}% · 모의 ${next.mockPct.toFixed(1)}% 기준으로 판정을 새로 조회했어요!`
+      `5등급 내신 ${next.grade5.toFixed(2)}등급 · 상위 ${nextEff.toFixed(1)}% · 모의 백분위 ${next.mockPct.toFixed(1)} 기준으로 판정을 새로 조회했어요!`
     );
 
     if (bannerTimerRef.current) {
@@ -375,13 +376,20 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
         </button>
       </div>
 
-      {/* Mandatory 2028 CSAT Notice Banner in Jeongsi Mode */}
-      {mode === 'jeongsi' && (
+      {/* Susi 9-grade vs 5-grade Notation Guide Banner / Jeongsi CSAT Notice Banner */}
+      {mode === 'susi' ? (
+        <div className="flex items-start gap-2.5 rounded-2xl bg-[#F5F1FD]/90 px-4 py-2.5 text-xs leading-relaxed text-[#4C3F73] ring-1 ring-[#E5DCF8]">
+          <Info className="mt-0.5 h-4 w-4 shrink-0 text-[#8674C4]" />
+          <div>
+            <strong>등급 표기 안내:</strong> 학과 카드의 등급은 <strong>과거 선배들의 9등급제</strong> 입결이며, 이를 <strong>전교 상위 누적(% · 낮을수록 상위)</strong>으로 환산해 현 고1(5등급제) 성적과 비교합니다.
+          </div>
+        </div>
+      ) : (
         <div className="flex items-start gap-2.5 rounded-2xl bg-[#FEF8EC]/95 px-4 py-3 text-xs leading-relaxed text-[#7F5415] ring-1 ring-[#F4DEB5]">
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-[#D8942B]" />
           <div>
             <strong>2028 통합수능 개편 안내:</strong> 선택과목 폐지·통합수능 도입으로 과거 대학별 환산점수는 직접 비교할 수 없어요.{' '}
-            <strong>3개년 국수탐 평균 백분위(70% 컷)</strong> 기준 상대 위치 참고용으로 활용해 주세요.
+            <strong>3개년 국수탐 평균 백분위(70%컷 · 100에 가까울수록 상위)</strong> 기준 상대 위치 참고용으로 활용해 주세요.
           </div>
         </div>
       )}
@@ -568,8 +576,8 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
           조회 결과 <strong className="text-[#231E33] tabular-nums">{activeTotal.toLocaleString()}</strong>개 모집단위
           <span className="rounded-full bg-[#F3EEFC] px-2 py-0.5 text-[10.5px] font-bold text-[#6D5AA8] tabular-nums">
             {mode === 'susi'
-              ? `상위 ${effectivePct.toFixed(1)}% 기준`
-              : `모의 ${profile.mockPct.toFixed(1)}% 기준`}
+              ? `내 상위 누적 ${effectivePct.toFixed(1)}% 기준`
+              : `내 모의 백분위 ${profile.mockPct.toFixed(1)} 기준`}
           </span>
         </span>
         <span className="text-[11px] text-[#BD4F82] font-semibold">
@@ -681,19 +689,23 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                 {/* Numeric Metric Grid */}
                 <div className="mt-3 grid grid-cols-3 gap-2 rounded-2xl bg-[#F8F6FD] p-2.5 text-center tabular-nums ring-1 ring-[#EFEAF8]">
                   <div>
-                    <div className="text-[10.5px] font-medium text-[#7D7494]">3개년 평균 70%컷</div>
+                    <div className="text-[10px] font-semibold text-[#7D7494]">3개년 70%컷(9등급)</div>
                     <div className="mt-0.5 text-sm font-extrabold text-[#231E33]">
                       {r.avg !== null ? `${r.avg.toFixed(2)}등급` : '-'}
                     </div>
+                    <div className="text-[9.5px] font-medium text-[#9B93B0]">과거 9등급제</div>
                   </div>
                   <div>
-                    <div className="text-[10.5px] font-medium text-[#7D7494]">요구 상위 누적</div>
+                    <div className="text-[10px] font-semibold text-[#7D7494]">환산 상위 누적</div>
                     <div className="mt-0.5 text-sm font-extrabold text-[#7561B4]">
                       {r.reqPct !== null ? `상위 ${r.reqPct.toFixed(1)}%` : '-'}
                     </div>
+                    <div className="text-[9.5px] font-bold text-[#BD4F82]">
+                      {r.g5Label ? `현 5등급: ${r.g5Label.split(' ')[0]}` : '-'}
+                    </div>
                   </div>
                   <div>
-                    <div className="text-[10.5px] font-medium text-[#7D7494]">내 성적 대비</div>
+                    <div className="text-[10px] font-semibold text-[#7D7494]">내 상위% 대비</div>
                     <div
                       className={`mt-0.5 text-xs font-extrabold ${
                         r.diffPct !== null && r.diffPct >= -0.05 ? 'text-[#287B6C]' : 'text-[#BD4F82]'
@@ -707,12 +719,14 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                             ? `+${r.diffPct.toFixed(1)}%p 여유`
                             : `${r.diffPct.toFixed(1)}%p 부족`}
                     </div>
+                    <div className="text-[9.5px] font-medium text-[#9B93B0]">내 {effectivePct.toFixed(1)}% 비교</div>
                   </div>
                 </div>
 
                 {/* Bottom 3-year mini timeline */}
                 <div className="mt-2.5 flex items-center justify-between text-[11px] text-[#7D7494] tabular-nums px-0.5">
                   <span>
+                    <span className="font-semibold text-[#8A7FB0]">9등급 컷</span>{' '}
                     24년 <strong>{r.c24 !== null ? r.c24.toFixed(2) : '-'}</strong> → 25년{' '}
                     <strong>{r.c25 !== null ? r.c25.toFixed(2) : '-'}</strong> → 26년{' '}
                     <strong className="text-[#231E33]">
@@ -802,19 +816,21 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
 
                 <div className="mt-3 grid grid-cols-3 gap-2 rounded-2xl bg-[#F2F9FB] p-2.5 text-center tabular-nums ring-1 ring-[#DCEEF3]">
                   <div>
-                    <div className="text-[10.5px] font-medium text-[#6B8088]">3개년 백분위70%</div>
+                    <div className="text-[10px] font-semibold text-[#6B8088]">국수탐 백분위 70%컷</div>
                     <div className="mt-0.5 text-sm font-extrabold text-[#256776]">
-                      {r.avg !== null ? `${r.avg.toFixed(2)}%` : '-'}
+                      {r.avg !== null ? `${r.avg.toFixed(2)}` : '-'}
                     </div>
+                    <div className="text-[9.5px] font-medium text-[#7D959E]">높을수록 상위</div>
                   </div>
                   <div>
-                    <div className="text-[10.5px] font-medium text-[#6B8088]">내 모의 백분위</div>
+                    <div className="text-[10px] font-semibold text-[#6B8088]">내 모의 백분위</div>
                     <div className="mt-0.5 text-sm font-extrabold text-[#231E33]">
-                      {profile.mockPct.toFixed(1)}%
+                      {profile.mockPct.toFixed(1)}
                     </div>
+                    <div className="text-[9.5px] font-medium text-[#7D959E]">만점 100</div>
                   </div>
                   <div>
-                    <div className="text-[10.5px] font-medium text-[#6B8088]">백분위 차이</div>
+                    <div className="text-[10px] font-semibold text-[#6B8088]">백분위 차이</div>
                     <div
                       className={`mt-0.5 text-xs font-extrabold ${
                         r.diffPct !== null && r.diffPct >= 0 ? 'text-[#287B6C]' : 'text-[#BD4F82]'
@@ -826,11 +842,13 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                           ? `+${r.diffPct.toFixed(1)}p 여유`
                           : `${r.diffPct.toFixed(1)}p 부족`}
                     </div>
+                    <div className="text-[9.5px] font-medium text-[#7D959E]">3개년 70%컷 대비</div>
                   </div>
                 </div>
 
                 <div className="mt-2.5 flex items-center justify-between text-[11px] text-[#7D7494] tabular-nums px-0.5">
                   <span>
+                    <span className="font-semibold text-[#478191]">백분위 70%</span>{' '}
                     24년 <strong>{r.p24 !== null ? r.p24.toFixed(1) : '-'}</strong> → 25년{' '}
                     <strong>{r.p25 !== null ? r.p25.toFixed(1) : '-'}</strong> → 26년{' '}
                     <strong className="text-[#231E33]">

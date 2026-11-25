@@ -147,7 +147,7 @@ export const ScoreControlPanel: React.FC<ScoreControlPanelProps> = ({ profile, o
               </div>
               <div className="mt-0.5 flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-xs text-[#6F6785] tabular-nums">
                 <span>
-                  내신 <strong className="text-[#231E33]">{profile.grade5.toFixed(2)}등급</strong>
+                  5등급 내신 <strong className="text-[#231E33]">{profile.grade5.toFixed(2)}등급</strong>
                 </span>
                 <span className="text-[#DDD6EC]">·</span>
                 <span>
@@ -155,7 +155,7 @@ export const ScoreControlPanel: React.FC<ScoreControlPanelProps> = ({ profile, o
                 </span>
                 <span className="text-[#DDD6EC]">·</span>
                 <span>
-                  모의 <strong className="text-[#2C747E]">{profile.mockPct.toFixed(1)}%</strong>
+                  모의 백분위 <strong className="text-[#2C747E]">{profile.mockPct.toFixed(1)}</strong>
                 </span>
               </div>
             </div>
@@ -226,7 +226,7 @@ export const ScoreControlPanel: React.FC<ScoreControlPanelProps> = ({ profile, o
                   </button>
                 </div>
                 <div className="mt-1.5 text-[10.5px] text-[#786E92] tabular-nums">
-                  수시 기준 · 자동보간 시 상위 <strong>{autoInterpFromDraftG5.toFixed(1)}%</strong>
+                  현 고1 5등급 기준 · 자동환산 상위 <strong>{autoInterpFromDraftG5.toFixed(1)}%</strong>
                 </div>
               </div>
 
@@ -281,10 +281,10 @@ export const ScoreControlPanel: React.FC<ScoreControlPanelProps> = ({ profile, o
                     type="button"
                     onClick={() => setCumText(autoInterpFromDraftG5.toFixed(1))}
                     className="inline-flex items-center gap-0.5 font-bold text-[#BD4F82] hover:underline"
-                    title="①번 내신 등급 기준 자동 보간값 채우기"
+                    title="①번 5등급 내신 기준 자동 환산값 채우기"
                   >
                     <RefreshCw className="h-2.5 w-2.5" />
-                    내신보간({autoInterpFromDraftG5.toFixed(1)}%)
+                    ①내신 자동환산({autoInterpFromDraftG5.toFixed(1)}%)
                   </button>
                 </div>
               </div>
@@ -328,7 +328,7 @@ export const ScoreControlPanel: React.FC<ScoreControlPanelProps> = ({ profile, o
                   </button>
                 </div>
                 <div className="mt-1.5 text-[10.5px] text-[#55747E]">
-                  정시 기준 (높을수록 상위) · 70%컷 비교
+                  정시 수능 백분위 (높을수록 상위) · 70%컷 비교
                 </div>
               </div>
             </div>
@@ -457,7 +457,7 @@ export const ScoreControlPanel: React.FC<ScoreControlPanelProps> = ({ profile, o
                   9등급제 ↔ 5등급제 누적 백분위(%) 환산표
                 </h3>
                 <p className="text-xs text-[#6F6785]">
-                  엑셀 4번 시트(P4:X14)와 동일한 구간 중앙값 선형보간 기준표
+                  과거 9등급제 ↔ 현 고1 5등급제 상위 누적(%) 대조 환산표 (엑셀 4번 시트 기준)
                 </p>
               </div>
               <button

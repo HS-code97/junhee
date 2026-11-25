@@ -118,7 +118,7 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
           </span>
         </div>
         <p className="mt-1 text-xs font-medium text-[#4D6370]">
-          가·나·다군 대학별 환산점수(50%·70%컷) 및 수능 국수탐 평균 백분위(50%·70%컷) 원천 데이터
+          가·나·다군 대학별 환산점수(50%·70%컷) 및 수능 국수탐 백분위(높을수록 상위 · 만점 100) 원천 데이터
         </p>
       </div>
 
@@ -349,7 +349,7 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
                   <div className="rounded-2xl bg-[#EEF8FA] p-2.5 ring-1 ring-[#D2EAF0]">
                     <div className="flex items-center justify-between text-[10px] font-bold text-[#2B6B7C]">
                       <span>국수탐 백분위</span>
-                      <span>영어 {fmt(r.eng, 1)}</span>
+                      <span>영어(9등급) {fmt(r.eng, 1)}</span>
                     </div>
                     <div className="mt-1 flex items-baseline justify-between text-xs">
                       <span className="text-[#6B8088]">50%컷</span>
@@ -380,7 +380,7 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
                 <th className="py-2.5 px-2 text-right font-extrabold bg-[#EFE9FC] text-[#5B4894]">환산70%</th>
                 <th className="py-2.5 px-2 text-right font-extrabold bg-[#E0F2F7] text-[#225C6B]">백분위50%</th>
                 <th className="py-2.5 px-2 text-right font-extrabold bg-[#E0F2F7] text-[#225C6B]">백분위70%</th>
-                <th className="py-2.5 px-2 text-right font-extrabold bg-[#E0F2F7] text-[#225C6B]">영어</th>
+                <th className="py-2.5 px-2 text-right font-extrabold bg-[#E0F2F7] text-[#225C6B]">영어(9등급)</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#F0EEF7]">

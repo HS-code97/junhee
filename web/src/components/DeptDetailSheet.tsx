@@ -231,19 +231,19 @@ export const DeptDetailSheet: React.FC<DeptDetailSheetProps> = ({
         {target.mode === 'susi' && target.sim && (
           <div className="mt-4 grid grid-cols-3 gap-2 rounded-2xl bg-gradient-to-r from-[#F5F1FD] via-[#FAF4FC] to-[#FDF2F7] p-3 text-center ring-1 ring-[#E8DDF7]">
             <div>
-              <div className="text-[11px] font-semibold text-[#7D7494]">3개년 평균 70%컷</div>
+              <div className="text-[11px] font-semibold text-[#7D7494]">3개년 70%컷 (과거 9등급)</div>
               <div className="mt-0.5 text-base font-extrabold text-[#231E33] tabular-nums">
                 {fmt(target.sim.avg)}등급
               </div>
             </div>
             <div>
-              <div className="text-[11px] font-semibold text-[#7D7494]">요구 상위 누적(%)</div>
+              <div className="text-[11px] font-semibold text-[#7D7494]">환산 상위 누적(%)</div>
               <div className="mt-0.5 text-base font-extrabold text-[#7561B4] tabular-nums">
                 상위 {fmt(target.sim.reqPct, 1)}%
               </div>
             </div>
             <div>
-              <div className="text-[11px] font-semibold text-[#7D7494]">5등급제 환산 구간</div>
+              <div className="text-[11px] font-semibold text-[#7D7494]">현 고1 환산 (5등급제)</div>
               <div className="mt-0.5 text-sm font-extrabold text-[#BD4F82] tabular-nums">
                 {target.sim.g5Label || '-'}
               </div>
@@ -254,9 +254,9 @@ export const DeptDetailSheet: React.FC<DeptDetailSheetProps> = ({
         {target.mode === 'jeongsi' && target.sim && (
           <div className="mt-4 grid grid-cols-3 gap-2 rounded-2xl bg-gradient-to-r from-[#EEF8FA] to-[#F4F1FD] p-3 text-center ring-1 ring-[#D4EAF0]">
             <div>
-              <div className="text-[11px] font-semibold text-[#667D85]">3개년 평균 백분위70%</div>
+              <div className="text-[11px] font-semibold text-[#667D85]">국수탐 백분위 70%컷</div>
               <div className="mt-0.5 text-base font-extrabold text-[#256776] tabular-nums">
-                {fmt(target.sim.avg, 2)}%
+                {fmt(target.sim.avg, 2)}
               </div>
             </div>
             <div>
@@ -278,7 +278,9 @@ export const DeptDetailSheet: React.FC<DeptDetailSheetProps> = ({
         <div className="mt-5">
           <h4 className="text-xs font-extrabold text-[#2B2440] flex items-center gap-1.5">
             <Info className="h-3.5 w-3.5 text-[#8674C4]" />
-            최근 3개년(2024~2026학년도) 공식 원천 입결 상세
+            {target.mode === 'susi'
+              ? '최근 3개년(2024~2026학년도) 공식 원천 입결 · 과거 9등급제 기준'
+              : '최근 3개년(2024~2026학년도) 공식 원천 입결 · 환산점수 / 국수탐 백분위'}
           </h4>
 
           {rawLoading ? (
@@ -294,8 +296,8 @@ export const DeptDetailSheet: React.FC<DeptDetailSheetProps> = ({
                     <th className="py-2 px-1.5 text-right font-bold">모집</th>
                     <th className="py-2 px-1.5 text-right font-bold">경쟁률</th>
                     <th className="py-2 px-1.5 text-right font-bold">충원</th>
-                    <th className="py-2 px-1.5 text-right font-bold text-[#6D5AA8]">50%컷</th>
-                    <th className="py-2 px-1.5 text-right font-bold text-[#BD4F82]">70%컷</th>
+                    <th className="py-2 px-1.5 text-right font-bold text-[#6D5AA8]">50%컷(9등급)</th>
+                    <th className="py-2 px-1.5 text-right font-bold text-[#BD4F82]">70%컷(9등급)</th>
                     <th className="py-2 px-1.5 text-center font-bold">출처</th>
                   </tr>
                 </thead>
@@ -346,7 +348,7 @@ export const DeptDetailSheet: React.FC<DeptDetailSheetProps> = ({
                     <th className="py-2.5 px-2 text-right font-bold text-[#6D5AA8]">환산70%(만점)</th>
                     <th className="py-2.5 px-2 text-right font-bold text-[#2F7888]">백분위50%</th>
                     <th className="py-2.5 px-2 text-right font-bold text-[#1E535F]">백분위70%</th>
-                    <th className="py-2.5 px-2 text-right font-bold">영어등급</th>
+                    <th className="py-2.5 px-2 text-right font-bold">영어(9등급)</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#F0EEF7]">

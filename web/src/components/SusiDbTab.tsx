@@ -107,7 +107,7 @@ export const SusiDbTab: React.FC<SusiDbTabProps> = ({
           <div>
             <span className="inline-flex items-center gap-1 rounded-full bg-white/65 px-2.5 py-0.5 text-[10.5px] font-bold text-[#6A57A5]">
               <Sparkles className="h-3 w-3 text-[#D96B9C]" />
-              엑셀 2번 시트 · 무가공 원천 데이터
+              엑셀 2번 시트 · 과거 9등급제 원천 데이터
             </span>
             <h2 className="mt-1.5 text-lg font-extrabold tracking-tight text-[#231E33]">
               수시 3개년(2024~2026) 입결 DB 조회
@@ -118,7 +118,7 @@ export const SusiDbTab: React.FC<SusiDbTabProps> = ({
           </span>
         </div>
         <p className="mt-1 text-xs font-medium text-[#5A4F78]">
-          학생부교과 · 학생부종합 · 논술전형 공식 발표 수치 (서울 본캠퍼스 정원 내 일반전형)
+          학생부교과 · 학생부종합 · 논술전형 공식 발표 수치 (과거 9등급제 기준 · 서울 본캠퍼스 일반전형)
         </p>
       </div>
 
@@ -248,7 +248,7 @@ export const SusiDbTab: React.FC<SusiDbTabProps> = ({
             className="rounded-xl bg-[#F5F2FB] px-2.5 py-1.5 text-xs font-bold text-[#4C4462] ring-1 ring-[#E8E2F4] focus:outline-none"
           >
             <option value="default">대학·연도 기본순</option>
-            <option value="c70Asc">70%컷 높은순(1등급↑)</option>
+            <option value="c70Asc">70%컷 높은순(9등급 1등급↑)</option>
             <option value="rateDesc">경쟁률 높은순</option>
             <option value="waitDesc">충원합격 많은순</option>
           </select>
@@ -366,8 +366,8 @@ export const SusiDbTab: React.FC<SusiDbTabProps> = ({
                 <th className="py-2.5 px-2 text-right font-extrabold">모집</th>
                 <th className="py-2.5 px-2 text-right font-extrabold">경쟁률</th>
                 <th className="py-2.5 px-2 text-right font-extrabold">충원</th>
-                <th className="py-2.5 px-2 text-right font-extrabold bg-[#EAE1FA] text-[#5B4894]">50%컷</th>
-                <th className="py-2.5 px-2.5 text-right font-extrabold bg-[#FBEAF2] text-[#A23E6E]">70%컷</th>
+                <th className="py-2.5 px-2 text-right font-extrabold bg-[#EAE1FA] text-[#5B4894]">50%컷(9등급)</th>
+                <th className="py-2.5 px-2.5 text-right font-extrabold bg-[#FBEAF2] text-[#A23E6E]">70%컷(9등급)</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#F2EEF9]">
