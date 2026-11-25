@@ -9,15 +9,15 @@
   }
 
   body {
-    background-color: #f7f5fc;
-    background-image:
-      radial-gradient(circle at 12% 8%, rgba(232, 222, 252, 0.55) 0%, transparent 42%),
-      radial-gradient(circle at 88% 18%, rgba(253, 232, 242, 0.5) 0%, transparent 40%),
-      radial-gradient(circle at 50% 92%, rgba(226, 241, 248, 0.42) 0%, transparent 46%);
-    background-attachment: fixed;
-    color: #231e33;
+    background-color: #f6f5f9;
+    color: #1f1b2c;
     overscroll-behavior-y: none;
     word-break: keep-all;
+  }
+
+  select option {
+    background-color: #ffffff;
+    color: #1f1b2c;
   }
 }
 
@@ -25,25 +25,25 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Soft glassmorphism surfaces inspired by airy pastel stationery UI */
+/* Clean, restrained glassmorphism surfaces without color noise */
 .glass-card {
-  background: rgba(255, 255, 255, 0.84);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 8px 28px -12px rgba(126, 107, 184, 0.14), 0 1px 2px rgba(126, 107, 184, 0.05);
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 18px -10px rgba(31, 27, 44, 0.1), 0 1px 2px rgba(31, 27, 44, 0.04);
 }
 
 .glass-bar {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
 .glass-sheet {
-  background: rgba(255, 255, 255, 0.93);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  box-shadow: 0 -12px 44px -10px rgba(126, 107, 184, 0.22);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  box-shadow: 0 -10px 36px -10px rgba(31, 27, 44, 0.18);
 }
 
 /* Hide scrollbars on horizontal filter chip bars while keeping smooth touch scroll */
@@ -64,11 +64,11 @@
   background: transparent;
 }
 .soft-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(169, 152, 214, 0.45);
+  background: rgba(147, 141, 163, 0.45);
   border-radius: 9999px;
 }
 .soft-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(142, 122, 198, 0.7);
+  background: rgba(95, 90, 112, 0.7);
 }
 
 /* Safe area padding for iPhone notch / home indicator */
@@ -104,26 +104,26 @@
 }
 
 .animate-sheet-up {
-  animation: slideUpSheet 0.26s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: slideUpSheet 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes resultPulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(219, 111, 158, 0.38);
-    transform: scale(0.992);
+    box-shadow: 0 0 0 0 rgba(212, 93, 146, 0.32);
+    transform: scale(0.994);
   }
   45% {
-    box-shadow: 0 0 0 8px rgba(168, 147, 224, 0.16);
-    transform: scale(1.006);
+    box-shadow: 0 0 0 6px rgba(212, 93, 146, 0.12);
+    transform: scale(1.004);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(168, 147, 224, 0);
+    box-shadow: 0 0 0 0 rgba(212, 93, 146, 0);
     transform: scale(1);
   }
 }
 
 .animate-result-pulse {
-  animation: resultPulse 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: resultPulse 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes popIn {
@@ -138,5 +138,5 @@
 }
 
 .animate-pop-in {
-  animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: popIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

@@ -21,7 +21,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onSelectTab }) 
   ];
 
   return (
-    <nav className="glass-bar fixed inset-x-0 bottom-0 z-30 border-t border-[#EAE3F6]/90 rounded-t-[24px] shadow-[0_-8px_28px_-12px_rgba(126,107,184,0.18)] md:hidden pb-safe">
+    <nav className="glass-bar fixed inset-x-0 bottom-0 z-30 border-t border-[#E6E4EE] rounded-t-[24px] shadow-[0_-6px_24px_-12px_rgba(31,27,44,0.16)] md:hidden pb-safe">
       <div className="mx-auto grid max-w-lg grid-cols-4 px-2 pt-1.5">
         {tabs.map((t) => {
           const Icon = t.icon;
@@ -32,19 +32,17 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onSelectTab }) 
               type="button"
               onClick={() => onSelectTab(t.id)}
               className={`flex flex-col items-center justify-center rounded-2xl py-1.5 transition active:scale-95 ${
-                isActive ? 'text-[#6A57A5]' : 'text-[#9B93B0] hover:text-[#5F5678]'
+                isActive ? 'text-[#1F1B2C]' : 'text-[#938DA3] hover:text-[#494459]'
               }`}
             >
               <div
-                className={`flex h-7 w-11 items-center justify-center rounded-full transition ${
-                  isActive
-                    ? 'bg-gradient-to-r from-[#EFE9FC] to-[#FCEBF3] text-[#7D68B8] ring-1 ring-[#E4D9F7]'
-                    : ''
+                className={`flex h-7 w-12 items-center justify-center rounded-full transition ${
+                  isActive ? 'bg-[#1F1B2C] text-white' : ''
                 }`}
               >
-                <Icon className="h-4.5 w-4.5" />
+                <Icon className="h-4 w-4" />
               </div>
-              <span className={`mt-0.5 text-[11px] ${isActive ? 'font-extrabold text-[#231E33]' : 'font-semibold'}`}>
+              <span className={`mt-0.5 text-[11px] ${isActive ? 'font-extrabold text-[#1F1B2C]' : 'font-semibold'}`}>
                 {t.label}
               </span>
             </button>

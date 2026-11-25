@@ -29,7 +29,6 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
 
   const qNorm = query.trim().toLowerCase();
 
-  // Counts per university (reflecting current year/gun/track/query filters)
   const univCounts = useMemo(() => {
     const map: Record<string, number> = {};
     if (!rows) return map;
@@ -87,9 +86,9 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
 
   if (loading || !rows) {
     return (
-      <div className="glass-card rounded-[26px] py-16 text-center ring-1 ring-[#EAE3F7]/90">
-        <div className="mx-auto h-7 w-7 animate-spin rounded-full border-3 border-[#CFE8F0] border-t-[#569DB1]" />
-        <p className="mt-3 text-xs font-bold text-[#6F6785]">
+      <div className="glass-card rounded-[24px] py-16 text-center ring-1 ring-[#E6E4EE]">
+        <div className="mx-auto h-7 w-7 animate-spin rounded-full border-3 border-[#E4E2EC] border-t-[#1F1B2C]" />
+        <p className="mt-3 text-xs font-bold text-[#5F5A70]">
           정시 3개년 원천 데이터베이스(2,149건)를 불러오는 중...
         </p>
       </div>
@@ -101,32 +100,32 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
 
   return (
     <div className="space-y-4">
-      {/* Header Banner — Soft Pastel Sky-Mint & Lavender */}
-      <div className="rounded-[26px] bg-gradient-to-r from-[#DFF1F6] via-[#E8F4F8] to-[#EEE8FA] p-4.5 text-[#1F2A36] shadow-[0_8px_24px_-12px_rgba(92,155,176,0.26)] ring-1 ring-white/80">
+      {/* Header Banner — Unified Flat Pastel Lavender */}
+      <div className="rounded-[24px] bg-[#E4DBFA] p-4.5 text-[#1F1B2C]">
         <div className="flex items-start justify-between gap-2">
           <div>
-            <span className="inline-flex items-center gap-1 rounded-full bg-white/70 px-2.5 py-0.5 text-[10.5px] font-bold text-[#2F6F80]">
-              <Sparkles className="h-3 w-3 text-[#5BA2B5]" />
-              엑셀 3번 시트 · 환산점수 / 국수탐 백분위 엄격 분리
+            <span className="inline-flex items-center gap-1 rounded-full bg-white/80 px-2.5 py-0.5 text-[10.5px] font-bold text-[#494459]">
+              <Sparkles className="h-3 w-3 text-[#D45D92]" />
+              엑셀 3번 시트 · 환산점수 / 국수탐 백분위 분리
             </span>
-            <h2 className="mt-1.5 text-lg font-extrabold tracking-tight text-[#1F2A36]">
+            <h2 className="mt-1.5 text-lg font-extrabold tracking-tight text-[#1F1B2C]">
               정시 3개년(2024~2026) 입결 DB 조회
             </h2>
           </div>
-          <span className="shrink-0 whitespace-nowrap rounded-2xl bg-white/75 px-3 py-1.5 text-xs font-extrabold text-[#2B6B7C] ring-1 ring-white/85 tabular-nums">
+          <span className="shrink-0 whitespace-nowrap rounded-2xl bg-white/80 px-3 py-1.5 text-xs font-extrabold text-[#1F1B2C] tabular-nums">
             총 {rows.length.toLocaleString()}건
           </span>
         </div>
-        <p className="mt-1 text-xs font-medium text-[#4D6370]">
+        <p className="mt-1 text-xs font-medium text-[#4E4766]">
           가·나·다군 대학별 환산점수(50%·70%컷) 및 수능 국수탐 백분위(높을수록 상위 · 만점 100) 원천 데이터
         </p>
       </div>
 
       {/* Filters */}
-      <div className="glass-card relative z-20 space-y-3 rounded-[26px] p-3.5 ring-1 ring-[#EAE3F7]/90">
+      <div className="glass-card relative z-20 space-y-3 rounded-[24px] p-3.5 ring-1 ring-[#E6E4EE]">
         <div className="flex items-center gap-2">
           <div className="relative flex-1">
-            <Search className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#9B93B0]" />
+            <Search className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#938DA3]" />
             <input
               type="text"
               value={query}
@@ -135,27 +134,27 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
                 setVisibleCount(40);
               }}
               placeholder="정시 학과명 · 대학명 · 전형명 검색"
-              className="h-10 w-full rounded-2xl bg-[#F7F5FC] pr-8 pl-9 text-xs font-semibold text-[#231E33] placeholder:font-normal placeholder:text-[#9B93B0] ring-1 ring-[#E8E2F4] focus:bg-white focus:ring-2 focus:ring-[#8AC5D6] focus:outline-none"
+              className="h-10 w-full rounded-xl bg-[#F6F5FA] pr-8 pl-9 text-xs font-semibold text-[#1F1B2C] placeholder:font-normal placeholder:text-[#938DA3] ring-1 ring-[#E6E4EE] focus:bg-white focus:ring-2 focus:ring-[#1F1B2C] focus:outline-none"
             />
             {query && (
               <button
                 type="button"
                 aria-label="검색어 지우기"
                 onClick={() => setQuery('')}
-                className="absolute top-1/2 right-2.5 -translate-y-1/2 text-[#9B93B0] hover:text-[#4C4462]"
+                className="absolute top-1/2 right-2.5 -translate-y-1/2 text-[#938DA3] hover:text-[#1F1B2C]"
               >
                 <X className="h-4 w-4" />
               </button>
             )}
           </div>
 
-          <div className="flex rounded-xl bg-[#F2EEF9] p-1 ring-1 ring-[#E7E0F4]">
+          <div className="flex rounded-xl bg-[#EFEFF4] p-1">
             <button
               type="button"
               onClick={() => setViewMode('card')}
               title="모바일 카드 보기"
               className={`rounded-lg p-1.5 transition ${
-                viewMode === 'card' ? 'bg-white text-[#2F7284] shadow-2xs' : 'text-[#8C83A3]'
+                viewMode === 'card' ? 'bg-[#1F1B2C] text-white' : 'text-[#7A748A] hover:text-[#1F1B2C]'
               }`}
             >
               <LayoutGrid className="h-4 w-4" />
@@ -165,7 +164,7 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
               onClick={() => setViewMode('table')}
               title="표 보기"
               className={`rounded-lg p-1.5 transition ${
-                viewMode === 'table' ? 'bg-white text-[#2F7284] shadow-2xs' : 'text-[#8C83A3]'
+                viewMode === 'table' ? 'bg-[#1F1B2C] text-white' : 'text-[#7A748A] hover:text-[#1F1B2C]'
               }`}
             >
               <Table className="h-4 w-4" />
@@ -185,8 +184,8 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
               }}
               className={`shrink-0 rounded-xl px-3 py-1.5 text-xs font-extrabold transition ${
                 yearFilter === yr
-                  ? 'bg-[#2C2540] text-white shadow-2xs'
-                  : 'bg-[#F4F1FA] text-[#5F5678] hover:bg-[#EAE4F7]'
+                  ? 'bg-[#1F1B2C] text-white'
+                  : 'bg-[#F3F2F7] text-[#5F5A70] hover:bg-[#EAE8F2]'
               }`}
             >
               {yr === '전체' ? '연도 전체' : `${yr}학년도`}
@@ -194,8 +193,8 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
           ))}
         </div>
 
-        {/* Dropdown Filter Row: University (Scrollable) + Gun + Track + Sort */}
-        <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-[#F0EBF9]">
+        {/* Dropdown Filter Row */}
+        <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-[#EFEFF4]">
           <div className="flex flex-wrap items-center gap-1.5">
             <UnivDropdown
               universities={universities}
@@ -206,7 +205,6 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
               }}
               counts={univCounts}
               totalCount={totalBeforeUniv}
-              tone="sky"
             />
 
             <select
@@ -216,7 +214,11 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
                 setGunFilter(e.target.value);
                 setVisibleCount(40);
               }}
-              className="rounded-xl bg-[#F5F2FB] px-2.5 py-1.5 text-xs font-bold text-[#4C4462] ring-1 ring-[#E8E2F4] focus:outline-none"
+              className={`rounded-xl px-2.5 py-1.5 text-xs font-bold ring-1 focus:outline-none transition ${
+                gunFilter !== '전체'
+                  ? 'bg-[#1F1B2C] text-white ring-[#1F1B2C]'
+                  : 'bg-[#F3F2F7] text-[#494459] ring-[#E4E2EC]'
+              }`}
             >
               <option value="전체">모집군: 전체</option>
               <option value="가">가군</option>
@@ -231,7 +233,11 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
                 setTrackFilter(e.target.value);
                 setVisibleCount(40);
               }}
-              className="rounded-xl bg-[#F5F2FB] px-2.5 py-1.5 text-xs font-bold text-[#4C4462] ring-1 ring-[#E8E2F4] focus:outline-none"
+              className={`rounded-xl px-2.5 py-1.5 text-xs font-bold ring-1 focus:outline-none transition ${
+                trackFilter !== '전체'
+                  ? 'bg-[#1F1B2C] text-white ring-[#1F1B2C]'
+                  : 'bg-[#F3F2F7] text-[#494459] ring-[#E4E2EC]'
+              }`}
             >
               <option value="전체">계열: 전체</option>
               <option value="인문">인문</option>
@@ -245,7 +251,7 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
             aria-label="정렬 기준"
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-            className="rounded-xl bg-[#F5F2FB] px-2.5 py-1.5 text-xs font-bold text-[#4C4462] ring-1 ring-[#E8E2F4] focus:outline-none"
+            className="rounded-xl bg-[#F3F2F7] px-2.5 py-1.5 text-xs font-bold text-[#494459] ring-1 ring-[#E4E2EC] focus:outline-none"
           >
             <option value="default">대학·연도 기본순</option>
             <option value="p70Desc">국수탐 백분위70% 높은순</option>
@@ -255,11 +261,11 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
         </div>
       </div>
 
-      <div className="flex items-center justify-between px-1 text-xs text-[#6F6785]">
+      <div className="flex items-center justify-between px-1 text-xs text-[#5F5A70]">
         <span>
-          검색 결과 <strong className="text-[#231E33] tabular-nums">{filtered.length.toLocaleString()}</strong>건
+          검색 결과 <strong className="text-[#1F1B2C] tabular-nums">{filtered.length.toLocaleString()}</strong>건
           {univFilter !== '전체' && (
-            <span className="ml-1.5 rounded-full bg-[#E9F5F8] px-2 py-0.5 text-[10.5px] font-bold text-[#2B6B7C]">
+            <span className="ml-1.5 rounded-full bg-[#1F1B2C] px-2 py-0.5 text-[10.5px] font-bold text-white">
               {univFilter}
             </span>
           )}
@@ -275,7 +281,7 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
               setQuery('');
               setVisibleCount(40);
             }}
-            className="text-[11px] font-bold text-[#BD4F82] hover:underline"
+            className="text-[11px] font-bold text-[#D45D92] hover:underline"
           >
             필터 초기화
           </button>
@@ -286,8 +292,8 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
         <div className="grid grid-cols-1 gap-2.5 md:grid-cols-2">
           {filtered.slice(0, visibleCount).map((r) => {
             const theme = UNIV_THEMES[r.u] ?? {
-              badgeBg: 'bg-[#E9F5F8]',
-              badgeText: 'text-[#2B6B7C]',
+              badgeBg: 'bg-[#F2F1F7]',
+              badgeText: 'text-[#1F1B2C]',
             };
             return (
               <div
@@ -302,11 +308,11 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
                     track: r.tr,
                   })
                 }
-                className="glass-card cursor-pointer rounded-[24px] p-4 ring-1 ring-[#EAE3F7]/90 transition hover:ring-[#B6DCE8] active:scale-[0.995]"
+                className="glass-card cursor-pointer rounded-[22px] p-4 ring-1 ring-[#E6E4EE] transition hover:ring-[#1F1B2C]/35 active:scale-[0.995]"
               >
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex flex-wrap items-center gap-1.5">
-                    <span className="rounded-lg bg-[#2C2540] px-2 py-0.5 text-[11px] font-extrabold text-white tabular-nums">
+                    <span className="rounded-lg bg-[#1F1B2C] px-2 py-0.5 text-[11px] font-extrabold text-white tabular-nums">
                       {r.yr}
                     </span>
                     <span
@@ -314,50 +320,47 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
                     >
                       {r.u}
                     </span>
-                    <span className="rounded-lg bg-[#E9F5F8] px-2 py-0.5 text-[11px] font-extrabold text-[#2B6B7C]">
-                      {r.gun}군
-                    </span>
-                    <span className="rounded-lg bg-white/80 px-2 py-0.5 text-[11px] text-[#7B7292] ring-1 ring-[#ECE6F7]">
-                      {r.tr}
+                    <span className="rounded-lg bg-[#F6F5FA] px-2 py-0.5 text-[11px] font-semibold text-[#5F5A70]">
+                      {r.gun}군 · {r.tr}
                     </span>
                   </div>
-                  <span className="text-[11px] text-[#7D7494] tabular-nums">
+                  <span className="text-[11px] text-[#7A748A] tabular-nums">
                     모집 {fmtInt(r.quota)} · 경쟁 {r.rate !== null ? `${r.rate.toFixed(1)}:1` : '-'} · 충원{' '}
                     {fmtInt(r.wait)}
                   </span>
                 </div>
 
-                <h3 className="mt-2 text-[15px] font-extrabold text-[#231E33]">{r.dept}</h3>
-                <p className="text-xs text-[#7D7494]">{r.adm}</p>
+                <h3 className="mt-2 text-[15px] font-extrabold text-[#1F1B2C]">{r.dept}</h3>
+                <p className="text-xs text-[#7A748A]">{r.adm}</p>
 
-                {/* Strictly Separated 2 Blocks: 대학환산점수 vs 국수탐 백분위 */}
+                {/* Strictly Separated 2 Neutral Blocks */}
                 <div className="mt-3 grid grid-cols-2 gap-2 tabular-nums">
-                  <div className="rounded-2xl bg-[#F5F1FD] p-2.5 ring-1 ring-[#E6DCF8]">
-                    <div className="text-[10px] font-bold text-[#6D5AA8]">
+                  <div className="rounded-2xl bg-[#F6F5FA] p-2.5 ring-1 ring-[#EAE8F2]">
+                    <div className="text-[10px] font-bold text-[#5F5A70]">
                       대학환산점수 {r.sMax ? `(만점 ${r.sMax})` : ''}
                     </div>
                     <div className="mt-1 flex items-baseline justify-between text-xs">
-                      <span className="text-[#7D7494]">50%컷</span>
-                      <span className="font-bold text-[#7561B4]">{fmt(r.s50)}</span>
+                      <span className="text-[#7A748A]">50%컷</span>
+                      <span className="font-bold text-[#494459]">{fmt(r.s50)}</span>
                     </div>
                     <div className="flex items-baseline justify-between text-xs">
-                      <span className="text-[#665D7E]">70%컷</span>
-                      <span className="font-extrabold text-[#453573]">{fmt(r.s70)}</span>
+                      <span className="text-[#5F5A70]">70%컷</span>
+                      <span className="font-extrabold text-[#1F1B2C]">{fmt(r.s70)}</span>
                     </div>
                   </div>
 
-                  <div className="rounded-2xl bg-[#EEF8FA] p-2.5 ring-1 ring-[#D2EAF0]">
-                    <div className="flex items-center justify-between text-[10px] font-bold text-[#2B6B7C]">
+                  <div className="rounded-2xl bg-[#F6F5FA] p-2.5 ring-1 ring-[#EAE8F2]">
+                    <div className="flex items-center justify-between text-[10px] font-bold text-[#5F5A70]">
                       <span>국수탐 백분위</span>
                       <span>영어(9등급) {fmt(r.eng, 1)}</span>
                     </div>
                     <div className="mt-1 flex items-baseline justify-between text-xs">
-                      <span className="text-[#6B8088]">50%컷</span>
-                      <span className="font-bold text-[#327885]">{fmt(r.p50)}</span>
+                      <span className="text-[#7A748A]">50%컷</span>
+                      <span className="font-bold text-[#6350A8]">{fmt(r.p50)}</span>
                     </div>
                     <div className="flex items-baseline justify-between text-xs">
-                      <span className="text-[#4F6872]">70%컷</span>
-                      <span className="font-extrabold text-[#1E535F]">{fmt(r.p70)}</span>
+                      <span className="text-[#5F5A70]">70%컷</span>
+                      <span className="font-extrabold text-[#D45D92]">{fmt(r.p70)}</span>
                     </div>
                   </div>
                 </div>
@@ -366,24 +369,24 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
           })}
         </div>
       ) : (
-        <div className="glass-card overflow-x-auto rounded-[24px] ring-1 ring-[#EAE3F7]/90">
+        <div className="glass-card overflow-x-auto rounded-[22px] ring-1 ring-[#E6E4EE]">
           <table className="w-full min-w-[820px] text-xs tabular-nums border-collapse">
             <thead>
-              <tr className="bg-[#EEF7FA] text-[#285B6B] border-b border-[#D5E9F0]">
+              <tr className="bg-[#F3F2F7] text-[#494459] border-b border-[#E6E4EE]">
                 <th className="py-2.5 px-2 text-center font-extrabold">연도</th>
                 <th className="py-2.5 px-2 text-center font-extrabold">대학</th>
                 <th className="py-2.5 px-1.5 text-center font-extrabold">군</th>
                 <th className="py-2.5 px-2.5 text-left font-extrabold">모집단위</th>
                 <th className="py-2.5 px-2 text-right font-extrabold">모집</th>
                 <th className="py-2.5 px-2 text-right font-extrabold">경쟁률</th>
-                <th className="py-2.5 px-2 text-right font-extrabold bg-[#EFE9FC] text-[#5B4894]">만점</th>
-                <th className="py-2.5 px-2 text-right font-extrabold bg-[#EFE9FC] text-[#5B4894]">환산70%</th>
-                <th className="py-2.5 px-2 text-right font-extrabold bg-[#E0F2F7] text-[#225C6B]">백분위50%</th>
-                <th className="py-2.5 px-2 text-right font-extrabold bg-[#E0F2F7] text-[#225C6B]">백분위70%</th>
-                <th className="py-2.5 px-2 text-right font-extrabold bg-[#E0F2F7] text-[#225C6B]">영어(9등급)</th>
+                <th className="py-2.5 px-2 text-right font-extrabold">만점</th>
+                <th className="py-2.5 px-2 text-right font-extrabold">환산70%</th>
+                <th className="py-2.5 px-2 text-right font-extrabold text-[#6350A8]">백분위50%</th>
+                <th className="py-2.5 px-2 text-right font-extrabold text-[#D45D92]">백분위70%</th>
+                <th className="py-2.5 px-2 text-right font-extrabold">영어(9등급)</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#F0EEF7]">
+            <tbody className="divide-y divide-[#EFEFF4]">
               {filtered.slice(0, visibleCount).map((r) => (
                 <tr
                   key={r.id}
@@ -397,19 +400,19 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
                       track: r.tr,
                     })
                   }
-                  className="cursor-pointer hover:bg-[#F0F8FA]/80"
+                  className="cursor-pointer hover:bg-[#F6F5FA]"
                 >
-                  <td className="py-2 px-2 text-center font-bold text-[#3D3554]">{r.yr}</td>
-                  <td className="py-2 px-2 text-center font-bold text-[#231E33]">{r.u}</td>
-                  <td className="py-2 px-1.5 text-center font-semibold text-[#2B6B7C]">{r.gun}</td>
-                  <td className="py-2 px-2.5 font-bold text-[#231E33]">{r.dept}</td>
-                  <td className="py-2 px-2 text-right text-[#4C4462]">{fmtInt(r.quota)}</td>
-                  <td className="py-2 px-2 text-right text-[#4C4462]">{fmt(r.rate)}</td>
-                  <td className="py-2 px-2 text-right text-[#8A829F]">{fmtInt(r.sMax)}</td>
-                  <td className="py-2 px-2 text-right font-bold text-[#6D5AA8]">{fmt(r.s70)}</td>
-                  <td className="py-2 px-2 text-right font-semibold text-[#327885]">{fmt(r.p50)}</td>
-                  <td className="py-2 px-2 text-right font-extrabold text-[#1E535F]">{fmt(r.p70)}</td>
-                  <td className="py-2 px-2 text-right text-[#4C4462]">{fmt(r.eng, 1)}</td>
+                  <td className="py-2 px-2 text-center font-bold text-[#494459]">{r.yr}</td>
+                  <td className="py-2 px-2 text-center font-bold text-[#1F1B2C]">{r.u}</td>
+                  <td className="py-2 px-1.5 text-center font-semibold text-[#5F5A70]">{r.gun}</td>
+                  <td className="py-2 px-2.5 font-bold text-[#1F1B2C]">{r.dept}</td>
+                  <td className="py-2 px-2 text-right text-[#494459]">{fmtInt(r.quota)}</td>
+                  <td className="py-2 px-2 text-right text-[#494459]">{fmt(r.rate)}</td>
+                  <td className="py-2 px-2 text-right text-[#8C879C]">{fmtInt(r.sMax)}</td>
+                  <td className="py-2 px-2 text-right font-bold text-[#1F1B2C]">{fmt(r.s70)}</td>
+                  <td className="py-2 px-2 text-right font-semibold text-[#6350A8]">{fmt(r.p50)}</td>
+                  <td className="py-2 px-2 text-right font-extrabold text-[#D45D92]">{fmt(r.p70)}</td>
+                  <td className="py-2 px-2 text-right text-[#494459]">{fmt(r.eng, 1)}</td>
                 </tr>
               ))}
             </tbody>
@@ -421,7 +424,7 @@ export const JeongsiDbTab: React.FC<JeongsiDbTabProps> = ({
         <button
           type="button"
           onClick={() => setVisibleCount((c) => c + 60)}
-          className="glass-card w-full rounded-2xl py-3.5 text-xs font-extrabold text-[#2B6B7C] ring-1 ring-[#D4EAF0] transition hover:bg-[#EEF8FA]"
+          className="glass-card w-full rounded-2xl py-3.5 text-xs font-extrabold text-[#1F1B2C] ring-1 ring-[#E6E4EE] transition hover:bg-[#F3F2F7]"
         >
           더 보기 ({visibleCount.toLocaleString()} / {filtered.length.toLocaleString()})
         </button>

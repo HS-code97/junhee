@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Building2, Check, ChevronDown, Search, X } from 'lucide-react';
-import { UNIV_THEMES } from '../lib/simulatorEngine';
 
 interface UnivDropdownProps {
   universities: string[];
@@ -17,7 +16,6 @@ export const UnivDropdown: React.FC<UnivDropdownProps> = ({
   onChange,
   counts,
   totalCount,
-  tone = 'lavender',
 }) => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
@@ -49,18 +47,6 @@ export const UnivDropdown: React.FC<UnivDropdownProps> = ({
   }, [universities, search]);
 
   const isSelected = value !== '전체';
-  const activeAccent =
-    tone === 'sky'
-      ? isSelected
-        ? 'bg-[#E5F4F8] text-[#28637A] ring-[#BBE0EC]'
-        : 'bg-[#F5F2FB] text-[#4C4462] ring-[#E8E2F4] hover:bg-[#EFEAF8]'
-      : isSelected
-        ? 'bg-[#EFE9FC] text-[#604D99] ring-[#D6C9F3]'
-        : 'bg-[#F5F2FB] text-[#4C4462] ring-[#E8E2F4] hover:bg-[#EFEAF8]';
-
-  const selectedItemBg =
-    tone === 'sky' ? 'bg-[#EAF5F9] text-[#256077]' : 'bg-[#F3EEFC] text-[#604D99]';
-  const selectedCheckColor = tone === 'sky' ? 'text-[#4B93AE]' : 'text-[#8B7AC9]';
 
   const handleSelect = (univ: string) => {
     onChange(univ);
@@ -78,11 +64,15 @@ export const UnivDropdown: React.FC<UnivDropdownProps> = ({
           setOpen((v) => !v);
           setSearch('');
         }}
-        className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold ring-1 transition active:scale-[0.98] ${activeAccent}`}
+        className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold ring-1 transition active:scale-[0.98] ${
+          isSelected
+            ? 'bg-[#1F1B2C] text-white ring-[#1F1B2C]'
+            : 'bg-[#F3F2F7] text-[#494459] ring-[#E4E2EC] hover:bg-[#EAE8F2]'
+        }`}
       >
-        <Building2 className="h-3.5 w-3.5 shrink-0 opacity-80" />
+        <Building2 className="h-3.5 w-3.5 shrink-0 opacity-85" />
         <span className="max-w-[110px] truncate">
-          {isSelected ? value : `대학교: 전체`}
+          {isSelected ? value : '대학교: 전체'}
         </span>
         <ChevronDown
           className={`h-3.5 w-3.5 shrink-0 transition-transform duration-200 ${
@@ -95,25 +85,25 @@ export const UnivDropdown: React.FC<UnivDropdownProps> = ({
         <div
           role="listbox"
           aria-label="대학교 선택"
-          className="absolute left-0 z-40 mt-2 w-60 origin-top-left rounded-2xl bg-white/96 p-2 shadow-[0_14px_36px_-10px_rgba(110,92,168,0.24)] ring-1 ring-[#E6DFF5] backdrop-blur-xl animate-pop-in"
+          className="absolute left-0 z-40 mt-2 w-60 origin-top-left rounded-2xl bg-white p-2 shadow-[0_14px_32px_-10px_rgba(31,27,44,0.22)] ring-1 ring-[#E4E2EC] animate-pop-in"
         >
-          {/* Quick filter inside dropdown for fast lookup */}
+          {/* Quick filter inside dropdown */}
           <div className="relative mb-1.5">
-            <Search className="pointer-events-none absolute top-1/2 left-2.5 h-3.5 w-3.5 -translate-y-1/2 text-[#9B93B0]" />
+            <Search className="pointer-events-none absolute top-1/2 left-2.5 h-3.5 w-3.5 -translate-y-1/2 text-[#938DA3]" />
             <input
               ref={inputRef}
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="대학명 빠른 찾기..."
-              className="h-8 w-full rounded-xl bg-[#F7F5FC] pr-7 pl-8 text-xs font-semibold text-[#231E33] placeholder:font-normal placeholder:text-[#9B93B0] ring-1 ring-[#EAE3F6] focus:bg-white focus:ring-[#B8A7E6] focus:outline-none"
+              className="h-8 w-full rounded-xl bg-[#F6F5FA] pr-7 pl-8 text-xs font-semibold text-[#1F1B2C] placeholder:font-normal placeholder:text-[#938DA3] ring-1 ring-[#E6E4EE] focus:bg-white focus:ring-2 focus:ring-[#1F1B2C] focus:outline-none"
             />
             {search && (
               <button
                 type="button"
                 aria-label="대학 검색어 지우기"
                 onClick={() => setSearch('')}
-                className="absolute top-1/2 right-2 -translate-y-1/2 text-[#9B93B0] hover:text-[#4C4462]"
+                className="absolute top-1/2 right-2 -translate-y-1/2 text-[#938DA3] hover:text-[#1F1B2C]"
               >
                 <X className="h-3.5 w-3.5" />
               </button>
@@ -130,33 +120,33 @@ export const UnivDropdown: React.FC<UnivDropdownProps> = ({
                 onClick={() => handleSelect('전체')}
                 className={`flex w-full items-center justify-between rounded-xl px-2.5 py-2 text-xs font-bold transition ${
                   value === '전체'
-                    ? selectedItemBg
-                    : 'text-[#3F3854] hover:bg-[#F7F4FC]'
+                    ? 'bg-[#1F1B2C] text-white'
+                    : 'text-[#3F3A4F] hover:bg-[#F3F2F7]'
                 }`}
               >
-                <span className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-gradient-to-r from-[#9B89D6] to-[#DE7BA6]" />
-                  전체 대학 ({universities.length}개교)
-                </span>
+                <span>전체 대학 ({universities.length}개교)</span>
                 <span className="flex items-center gap-1.5">
                   {totalCount !== undefined && (
-                    <span className="text-[10.5px] font-semibold text-[#8A829F] tabular-nums">
+                    <span
+                      className={`text-[10.5px] font-semibold tabular-nums ${
+                        value === '전체' ? 'text-white/75' : 'text-[#8C879C]'
+                      }`}
+                    >
                       {totalCount.toLocaleString()}
                     </span>
                   )}
-                  {value === '전체' && <Check className={`h-3.5 w-3.5 ${selectedCheckColor}`} />}
+                  {value === '전체' && <Check className="h-3.5 w-3.5 text-white" />}
                 </span>
               </button>
             )}
 
             {filteredUniversities.length === 0 ? (
-              <div className="py-5 text-center text-xs text-[#9B93B0]">
+              <div className="py-5 text-center text-xs text-[#938DA3]">
                 일치하는 대학이 없어요
               </div>
             ) : (
               filteredUniversities.map((u) => {
                 const selected = value === u;
-                const theme = UNIV_THEMES[u];
                 const cnt = counts?.[u];
                 return (
                   <button
@@ -167,24 +157,22 @@ export const UnivDropdown: React.FC<UnivDropdownProps> = ({
                     onClick={() => handleSelect(u)}
                     className={`flex w-full items-center justify-between rounded-xl px-2.5 py-2 text-xs font-bold transition ${
                       selected
-                        ? selectedItemBg
-                        : 'text-[#3F3854] hover:bg-[#F7F4FC]'
+                        ? 'bg-[#1F1B2C] text-white'
+                        : 'text-[#3F3A4F] hover:bg-[#F3F2F7]'
                     }`}
                   >
-                    <span className="flex items-center gap-2 truncate">
-                      <span
-                        className="h-2 w-2 shrink-0 rounded-full"
-                        style={{ backgroundColor: theme?.accent ?? '#9B89D6' }}
-                      />
-                      <span className="truncate">{u}</span>
-                    </span>
+                    <span className="truncate">{u}</span>
                     <span className="flex items-center gap-1.5 shrink-0">
                       {cnt !== undefined && (
-                        <span className="text-[10.5px] font-semibold text-[#8A829F] tabular-nums">
+                        <span
+                          className={`text-[10.5px] font-semibold tabular-nums ${
+                            selected ? 'text-white/75' : 'text-[#8C879C]'
+                          }`}
+                        >
                           {cnt.toLocaleString()}
                         </span>
                       )}
-                      {selected && <Check className={`h-3.5 w-3.5 ${selectedCheckColor}`} />}
+                      {selected && <Check className="h-3.5 w-3.5 text-white" />}
                     </span>
                   </button>
                 );

@@ -231,13 +231,13 @@ export const App: React.FC = () => {
   if (loadError) {
     return (
       <div className="flex min-h-screen items-center justify-center p-6 text-center">
-        <div className="glass-card max-w-sm rounded-[26px] p-6 ring-1 ring-[#F4CBE0]">
-          <p className="text-base font-extrabold text-[#BD4F82]">데이터 로드 중 오류가 발생했습니다</p>
-          <p className="mt-2 text-xs text-[#6F6785]">{loadError}</p>
+        <div className="glass-card max-w-sm rounded-[24px] p-6 ring-1 ring-[#E6E4EE]">
+          <p className="text-base font-extrabold text-[#B53F74]">데이터 로드 중 오류가 발생했습니다</p>
+          <p className="mt-2 text-xs text-[#5F5A70]">{loadError}</p>
           <button
             type="button"
             onClick={() => window.location.reload()}
-            className="mt-4 rounded-xl bg-gradient-to-r from-[#9582D1] to-[#DF7BA6] px-4 py-2 text-xs font-bold text-white"
+            className="mt-4 rounded-xl bg-[#1F1B2C] px-4 py-2 text-xs font-bold text-white"
           >
             다시 시도
           </button>
@@ -247,7 +247,7 @@ export const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col text-[#231E33] overflow-x-hidden">
+    <div className="min-h-screen flex flex-col text-[#1F1B2C] overflow-x-hidden">
       {/* Onboarding / Loading Overlay */}
       {(showOnboarding || simLoading) && (
         <IntroOnboarding
@@ -314,25 +314,25 @@ export const App: React.FC = () => {
         )}
 
         {/* Warm Footer Credit + Secondary Excel Download */}
-        <footer className="glass-card mt-10 rounded-[26px] p-5 text-center ring-1 ring-[#EAE3F7]/90 space-y-2.5">
+        <footer className="glass-card mt-10 rounded-[24px] p-5 text-center ring-1 ring-[#E6E4EE] space-y-2.5">
           <button
             type="button"
             onClick={() => setShowDedication(true)}
-            className="inline-flex items-center gap-1.5 rounded-full bg-[#FDF0F6] px-3.5 py-1 text-xs font-bold text-[#BD4F82] ring-1 ring-[#F4CBE0] hover:bg-[#FCE4EF] transition"
+            className="inline-flex items-center gap-1.5 rounded-full bg-[#F3F2F7] px-3.5 py-1 text-xs font-bold text-[#1F1B2C] ring-1 ring-[#E4E2EC] hover:bg-[#EAE8F2] transition"
           >
-            <Heart className="h-3.5 w-3.5 fill-[#DF7BA6] text-[#DF7BA6]" />
+            <Heart className="h-3.5 w-3.5 fill-[#D45D92] text-[#D45D92]" />
             동탄에서 아빠 김준희가 딸 김수련의 스무 살 봄을 응원하며 만든 2029 입시 나침반
           </button>
-          <p className="text-[11px] leading-relaxed text-[#8E86A3]">
+          <p className="text-[11px] leading-relaxed text-[#7A748A]">
             서울 주요 13개 대학 본캠퍼스 정원 내 일반전형 · 각 대학 입학처 공식 자료 및 대입정보포털 어디가(adiga.kr) 기반 · 최종 지원 시 반드시 각 대학 모집요강 원문을 확인하세요.
           </p>
           <div className="pt-1">
             <a
               href={EXCEL_DOWNLOAD_URL}
               download={EXCEL_DOWNLOAD_FILENAME}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-[#EAF7F3] px-3.5 py-2 text-xs font-extrabold text-[#257466] ring-1 ring-[#C2E7DC] hover:bg-[#DCF2EC] transition"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-[#F3F2F7] px-3.5 py-2 text-xs font-extrabold text-[#1F1B2C] ring-1 ring-[#E4E2EC] hover:bg-[#EAE8F2] transition"
             >
-              <Download className="h-3.5 w-3.5" />
+              <Download className="h-3.5 w-3.5 text-[#5F5A70]" />
               원본 6시트 엑셀 파일(서울13개대학_3개년입결_2029맞춤DB.xlsx) 내려받기
             </a>
           </div>

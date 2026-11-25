@@ -75,7 +75,6 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
 
   const effectivePct = getEffectiveStudentCumPct(profile.grade5, profile.customCumPct);
 
-  // Reset pagination when filters change
   const resetPage = () => setVisibleCount(36);
 
   const handleApplyProfile = (next: StudentProfile) => {
@@ -95,7 +94,6 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
       setAppliedBanner(null);
     }, 4500);
 
-    // Smoothly bring the judgment summary into view if scrolled above it on mobile
     if (resultAnchorRef.current) {
       const rect = resultAnchorRef.current.getBoundingClientRect();
       if (rect.top > window.innerHeight * 0.65 || rect.top < 64) {
@@ -104,7 +102,6 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
     }
   };
 
-  // Enrich Susi rows with live judgment
   const susiEvaluated = useMemo(() => {
     return susiSim.map((r) => {
       const judgment = evaluateSusiJudgment(
@@ -118,7 +115,6 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
     });
   }, [susiSim, profile.grade5, profile.customCumPct, effectivePct]);
 
-  // Enrich Jeongsi rows with live judgment
   const jeongsiEvaluated = useMemo(() => {
     return jeongsiSim.map((r) => {
       const judgment = evaluateJeongsiJudgment(r.avg, profile.mockPct);
@@ -127,7 +123,6 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
     });
   }, [jeongsiSim, profile.mockPct]);
 
-  // Base filtered (before judgment chip filter) so judgment chip counts reflect Univ/Track/Type/Search filters
   const qNorm = query.trim().toLowerCase();
 
   const susiBaseFiltered = useMemo(() => {
@@ -166,7 +161,6 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
     });
   }, [jeongsiEvaluated, onlyFavs, favorites, univFilter, trackFilter, gunFilter, qNorm]);
 
-  // Judgment counts
   const judgmentCounts = useMemo(() => {
     const counts: Record<string, number> = {
       전체: mode === 'susi' ? susiBaseFiltered.length : jeongsiBaseFiltered.length,
@@ -183,7 +177,6 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
     return counts;
   }, [mode, susiBaseFiltered, jeongsiBaseFiltered]);
 
-  // Final filtered + sorted list
   const finalSusiList = useMemo(() => {
     const arr =
       judgmentFilter === '전체'
@@ -206,12 +199,8 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
         if (ra !== rb) return ra - rb;
         return Math.abs(a.diffPct ?? 99) - Math.abs(b.diffPct ?? 99);
       }
-      if (sortBy === 'cutHigh') {
-        return (a.avg ?? 99) - (b.avg ?? 99);
-      }
-      if (sortBy === 'cutLow') {
-        return (b.avg ?? -1) - (a.avg ?? -1);
-      }
+      if (sortBy === 'cutHigh') return (a.avg ?? 99) - (b.avg ?? 99);
+      if (sortBy === 'cutLow') return (b.avg ?? -1) - (a.avg ?? -1);
       return a.id - b.id;
     });
     return arr;
@@ -238,12 +227,8 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
         if (ra !== rb) return ra - rb;
         return Math.abs(a.diffPct ?? 99) - Math.abs(b.diffPct ?? 99);
       }
-      if (sortBy === 'cutHigh') {
-        return (b.avg ?? -1) - (a.avg ?? -1);
-      }
-      if (sortBy === 'cutLow') {
-        return (a.avg ?? 999) - (b.avg ?? 999);
-      }
+      if (sortBy === 'cutHigh') return (b.avg ?? -1) - (a.avg ?? -1);
+      if (sortBy === 'cutLow') return (a.avg ?? 999) - (b.avg ?? 999);
       return a.id - b.id;
     });
     return arr;
@@ -285,25 +270,25 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
 
   return (
     <div className="space-y-4">
-      {/* 0. Soft Pastel Hero Banner (inspired by reference image's top lavender card) */}
-      <div className="rounded-[26px] bg-gradient-to-r from-[#E6DCFB] via-[#DFD3F8] to-[#F3E1F5] px-5 py-4 text-[#231E33] shadow-[0_8px_24px_-12px_rgba(142,120,204,0.3)] ring-1 ring-white/75">
+      {/* 0. Flat Pastel Lavender Hero Banner (no gradient) */}
+      <div className="rounded-[24px] bg-[#E4DBFA] px-5 py-4 text-[#1F1B2C]">
         <div className="flex items-center justify-between gap-2">
           <div>
-            <span className="inline-flex items-center gap-1 rounded-full bg-white/65 px-2.5 py-0.5 text-[10.5px] font-bold text-[#6A57A5]">
-              <Sparkles className="h-3 w-3 text-[#D96B9C]" />
+            <span className="inline-flex items-center gap-1 rounded-full bg-white/80 px-2.5 py-0.5 text-[10.5px] font-bold text-[#494459]">
+              <Sparkles className="h-3 w-3 text-[#D45D92]" />
               2029학년도 현 고1 맞춤 시뮬레이터
             </span>
-            <h2 className="mt-1 text-[17px] sm:text-lg font-extrabold tracking-tight text-[#231E33]">
+            <h2 className="mt-1.5 text-[17px] sm:text-lg font-extrabold tracking-tight text-[#1F1B2C]">
               내 성적으로 서울 13개교 한눈에 판정하기
             </h2>
           </div>
-          <div className="hidden sm:flex flex-col items-end text-right text-[11px] font-bold text-[#5C507D] tabular-nums">
-            <span className="rounded-xl bg-white/65 px-2.5 py-1">
+          <div className="hidden sm:flex flex-col items-end text-right text-[11px] font-bold text-[#494459] tabular-nums">
+            <span className="rounded-xl bg-white/80 px-2.5 py-1">
               수시 {susiSim.length.toLocaleString()} · 정시 {jeongsiSim.length.toLocaleString()}
             </span>
           </div>
         </div>
-        <p className="mt-1 text-xs font-medium text-[#5A4F78]">
+        <p className="mt-1 text-xs font-medium text-[#4E4766]">
           아래 3개 성적을 입력하고 <strong>[맞춤 판정 조회하기]</strong>를 누르면 안정·적정·소신·상향 결과를 바로 확인할 수 있어요.
         </p>
       </div>
@@ -311,31 +296,31 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
       {/* 1. Student Score Input Card */}
       <ScoreControlPanel profile={profile} onApply={handleApplyProfile} />
 
-      {/* Lookup Confirmation Banner (animates on each click of 조회하기) */}
+      {/* Lookup Confirmation Banner — Flat solid rose tint */}
       {appliedBanner && (
         <div
           key={`banner-${pulseKey}`}
-          className="flex items-center justify-between gap-2 rounded-2xl bg-gradient-to-r from-[#F5EEFC] via-[#FDF0F6] to-[#EEF8FA] px-4 py-2.5 text-xs font-bold text-[#3C2F59] ring-1 ring-[#E5D4F0] shadow-xs animate-pop-in"
+          className="flex items-center justify-between gap-2 rounded-2xl bg-[#FCEEF4] px-4 py-2.5 text-xs font-bold text-[#8E2B58] ring-1 ring-[#F2C3D8] animate-pop-in"
         >
           <span className="flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 shrink-0 text-[#D46A9A]" />
+            <CheckCircle2 className="h-4 w-4 shrink-0 text-[#D45D92]" />
             {appliedBanner}
           </span>
           <button
             type="button"
             onClick={() => setAppliedBanner(null)}
             aria-label="안내 닫기"
-            className="text-[#8E82A6] hover:text-[#231E33]"
+            className="text-[#B53F74] hover:text-[#1F1B2C]"
           >
             <X className="h-3.5 w-3.5" />
           </button>
         </div>
       )}
 
-      {/* 2. Mode Switcher: 수시 vs 정시 */}
+      {/* 2. Mode Switcher — High-contrast solid active tab */}
       <div
         ref={resultAnchorRef}
-        className="grid grid-cols-2 gap-1.5 rounded-2xl bg-[#EFEAF8]/90 p-1.5 ring-1 ring-[#E4DCF3]"
+        className="grid grid-cols-2 gap-1.5 rounded-2xl bg-[#EAE8F2] p-1.5"
       >
         <button
           type="button"
@@ -346,12 +331,16 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
           }}
           className={`flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-sm font-extrabold transition ${
             mode === 'susi'
-              ? 'bg-white text-[#6753A4] shadow-xs ring-1 ring-[#E6DDF7]'
-              : 'text-[#6F6785] hover:text-[#231E33]'
+              ? 'bg-[#1F1B2C] text-white shadow-xs'
+              : 'text-[#5F5A70] hover:text-[#1F1B2C]'
           }`}
         >
           수시 맞춤 판정
-          <span className="rounded-full bg-[#F3EEFC] px-2 py-0.5 text-[11px] font-bold text-[#7A67B8] tabular-nums">
+          <span
+            className={`rounded-full px-2 py-0.5 text-[11px] font-bold tabular-nums ${
+              mode === 'susi' ? 'bg-white/20 text-white' : 'bg-white text-[#5F5A70]'
+            }`}
+          >
             {susiSim.length.toLocaleString()}
           </span>
         </button>
@@ -365,46 +354,52 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
           }}
           className={`flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-sm font-extrabold transition ${
             mode === 'jeongsi'
-              ? 'bg-white text-[#296D7D] shadow-xs ring-1 ring-[#D2EBF1]'
-              : 'text-[#6F6785] hover:text-[#231E33]'
+              ? 'bg-[#1F1B2C] text-white shadow-xs'
+              : 'text-[#5F5A70] hover:text-[#1F1B2C]'
           }`}
         >
           정시 맞춤 판정
-          <span className="rounded-full bg-[#E9F5F8] px-2 py-0.5 text-[11px] font-bold text-[#2F7888] tabular-nums">
+          <span
+            className={`rounded-full px-2 py-0.5 text-[11px] font-bold tabular-nums ${
+              mode === 'jeongsi' ? 'bg-white/20 text-white' : 'bg-white text-[#5F5A70]'
+            }`}
+          >
             {jeongsiSim.length.toLocaleString()}
           </span>
         </button>
       </div>
 
-      {/* Susi 9-grade vs 5-grade Notation Guide Banner / Jeongsi CSAT Notice Banner */}
+      {/* Susi / Jeongsi Guide Strip — Calm flat neutral */}
       {mode === 'susi' ? (
-        <div className="flex items-start gap-2.5 rounded-2xl bg-[#F5F1FD]/90 px-4 py-2.5 text-xs leading-relaxed text-[#4C3F73] ring-1 ring-[#E5DCF8]">
-          <Info className="mt-0.5 h-4 w-4 shrink-0 text-[#8674C4]" />
+        <div className="flex items-start gap-2.5 rounded-2xl bg-white px-4 py-2.5 text-xs leading-relaxed text-[#494459] ring-1 ring-[#E6E4EE]">
+          <Info className="mt-0.5 h-4 w-4 shrink-0 text-[#6350A8]" />
           <div>
-            <strong>등급 표기 안내:</strong> 학과 카드의 등급은 <strong>과거 선배들의 9등급제</strong> 입결이며, 이를 <strong>전교 상위 누적(% · 낮을수록 상위)</strong>으로 환산해 현 고1(5등급제) 성적과 비교합니다.
+            <strong className="text-[#1F1B2C]">등급 표기 안내:</strong> 학과 카드의 등급은{' '}
+            <strong className="text-[#1F1B2C]">과거 선배들의 9등급제</strong> 입결이며, 이를{' '}
+            <strong className="text-[#1F1B2C]">전교 상위 누적(% · 낮을수록 상위)</strong>으로 환산해 현 고1(5등급제) 성적과 비교합니다.
           </div>
         </div>
       ) : (
-        <div className="flex items-start gap-2.5 rounded-2xl bg-[#FEF8EC]/95 px-4 py-3 text-xs leading-relaxed text-[#7F5415] ring-1 ring-[#F4DEB5]">
-          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-[#D8942B]" />
+        <div className="flex items-start gap-2.5 rounded-2xl bg-white px-4 py-3 text-xs leading-relaxed text-[#494459] ring-1 ring-[#E6E4EE]">
+          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-[#D9962B]" />
           <div>
-            <strong>2028 통합수능 개편 안내:</strong> 선택과목 폐지·통합수능 도입으로 과거 대학별 환산점수는 직접 비교할 수 없어요.{' '}
-            <strong>3개년 국수탐 평균 백분위(70%컷 · 100에 가까울수록 상위)</strong> 기준 상대 위치 참고용으로 활용해 주세요.
+            <strong className="text-[#1F1B2C]">2028 통합수능 개편 안내:</strong> 선택과목 폐지·통합수능 도입으로 과거 대학별 환산점수는 직접 비교할 수 없어요.{' '}
+            <strong className="text-[#1F1B2C]">3개년 국수탐 평균 백분위(70%컷 · 100에 가까울수록 상위)</strong> 기준 상대 위치 참고용으로 활용해 주세요.
           </div>
         </div>
       )}
 
-      {/* 3. Filter & Search Box (pulses subtly when lookup is applied) */}
+      {/* 3. Filter & Search Box */}
       <div
         key={`panel-${pulseKey}`}
-        className={`glass-card space-y-2.5 rounded-[26px] p-3.5 ring-1 ring-[#EAE3F7]/90 ${
+        className={`glass-card space-y-2.5 rounded-[24px] p-3.5 ring-1 ring-[#E6E4EE] ${
           pulseKey > 0 ? 'animate-result-pulse' : ''
         }`}
       >
         {/* Search + Favorites Toggle */}
         <div className="flex items-center gap-2">
           <div className="relative flex-1">
-            <Search className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#9B93B0]" />
+            <Search className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#938DA3]" />
             <input
               type="text"
               value={query}
@@ -413,7 +408,7 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                 resetPage();
               }}
               placeholder="학과명, 대학명, 전형명 검색 (예: 컴퓨터, 의예, 자유전공)"
-              className="h-10 w-full rounded-2xl bg-[#F7F5FC] pr-8 pl-9 text-xs font-semibold text-[#231E33] placeholder:font-normal placeholder:text-[#9B93B0] ring-1 ring-[#E8E2F4] focus:bg-white focus:ring-2 focus:ring-[#B3A1E3] focus:outline-none"
+              className="h-10 w-full rounded-xl bg-[#F6F5FA] pr-8 pl-9 text-xs font-semibold text-[#1F1B2C] placeholder:font-normal placeholder:text-[#938DA3] ring-1 ring-[#E6E4EE] focus:bg-white focus:ring-2 focus:ring-[#1F1B2C] focus:outline-none"
             />
             {query && (
               <button
@@ -423,7 +418,7 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                   setQuery('');
                   resetPage();
                 }}
-                className="absolute top-1/2 right-2.5 -translate-y-1/2 text-[#9B93B0] hover:text-[#4C4462]"
+                className="absolute top-1/2 right-2.5 -translate-y-1/2 text-[#938DA3] hover:text-[#1F1B2C]"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -436,18 +431,18 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
               setOnlyFavs((v) => !v);
               resetPage();
             }}
-            className={`inline-flex h-10 shrink-0 items-center gap-1 rounded-2xl px-3 text-xs font-bold ring-1 transition ${
+            className={`inline-flex h-10 shrink-0 items-center gap-1 rounded-xl px-3 text-xs font-bold ring-1 transition ${
               onlyFavs
-                ? 'bg-[#D96B9C] text-white ring-[#D96B9C]'
-                : 'bg-[#FDF0F6] text-[#BD4F82] ring-[#F4CCE0] hover:bg-[#FBE4EF]'
+                ? 'bg-[#D45D92] text-white ring-[#D45D92]'
+                : 'bg-[#F3F2F7] text-[#494459] ring-[#E4E2EC] hover:bg-[#EAE8F2]'
             }`}
           >
-            <Heart className={`h-3.5 w-3.5 ${onlyFavs ? 'fill-white' : 'fill-[#E488B2]'}`} />
+            <Heart className={`h-3.5 w-3.5 ${onlyFavs ? 'fill-white text-white' : 'text-[#D45D92]'}`} />
             관심 {favCountInMode}
           </button>
         </div>
 
-        {/* Judgment Live Count Chips */}
+        {/* Judgment Live Count Chips — Clear solid black when active */}
         <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
           {judgmentChips.map((chip) => {
             const cnt = judgmentCounts[chip.key] ?? 0;
@@ -463,13 +458,11 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                 }}
                 className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold transition ${
                   active
-                    ? 'bg-[#2C2540] text-white shadow-xs'
-                    : st
-                      ? `${st.bg} ${st.text} ring-1 ${st.ring}`
-                      : 'bg-[#F3F0FA] text-[#534A6C]'
+                    ? 'bg-[#1F1B2C] text-white shadow-xs'
+                    : 'bg-[#F3F2F7] text-[#494459] ring-1 ring-[#E4E2EC] hover:bg-[#EAE8F2]'
                 }`}
               >
-                {st && !active && <span className={`h-1.5 w-1.5 rounded-full ${st.dot}`} />}
+                {st && <span className={`h-2 w-2 rounded-full ${active ? 'bg-white' : st.dot}`} />}
                 {chip.label}
                 <span className="tabular-nums opacity-85">{cnt.toLocaleString()}</span>
               </button>
@@ -477,7 +470,7 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
           })}
         </div>
 
-        {/* University Horizontal Chips (kept in Simulator tab per user instruction) */}
+        {/* University Horizontal Chips — Solid high-contrast selected pill */}
         <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
           {['전체', ...universities].map((u) => {
             const active = univFilter === u;
@@ -491,8 +484,8 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                 }}
                 className={`shrink-0 rounded-xl px-2.5 py-1 text-xs font-bold transition ${
                   active
-                    ? 'bg-[#8B7AC9] text-white shadow-2xs'
-                    : 'bg-[#F4F1FA] text-[#5F5678] hover:bg-[#EAE4F7]'
+                    ? 'bg-[#1F1B2C] text-white'
+                    : 'bg-[#F3F2F7] text-[#5F5A70] hover:bg-[#EAE8F2]'
                 }`}
               >
                 {u}
@@ -501,8 +494,8 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
           })}
         </div>
 
-        {/* Sub-filters: Track + Type/Gun + Sort */}
-        <div className="flex flex-wrap items-center justify-between gap-2 pt-1.5 border-t border-[#F0EBF9]">
+        {/* Sub-filters: Track + Type/Gun + Sort — Solid dark when actively filtered */}
+        <div className="flex flex-wrap items-center justify-between gap-2 pt-1.5 border-t border-[#EFEFF4]">
           <div className="flex flex-wrap items-center gap-1.5">
             <select
               aria-label="희망 계열 선택"
@@ -511,7 +504,11 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                 setTrackFilter(e.target.value);
                 resetPage();
               }}
-              className="rounded-xl bg-[#F5F2FB] px-2.5 py-1.5 text-xs font-bold text-[#4C4462] ring-1 ring-[#E8E2F4] focus:outline-none"
+              className={`rounded-xl px-2.5 py-1.5 text-xs font-bold ring-1 focus:outline-none transition ${
+                trackFilter !== '전체'
+                  ? 'bg-[#1F1B2C] text-white ring-[#1F1B2C]'
+                  : 'bg-[#F3F2F7] text-[#494459] ring-[#E4E2EC]'
+              }`}
             >
               <option value="전체">계열: 전체</option>
               <option value="인문">인문계열</option>
@@ -528,7 +525,11 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                   setTypeFilter(e.target.value);
                   resetPage();
                 }}
-                className="rounded-xl bg-[#F5F2FB] px-2.5 py-1.5 text-xs font-bold text-[#4C4462] ring-1 ring-[#E8E2F4] focus:outline-none"
+                className={`rounded-xl px-2.5 py-1.5 text-xs font-bold ring-1 focus:outline-none transition ${
+                  typeFilter !== '전체'
+                    ? 'bg-[#1F1B2C] text-white ring-[#1F1B2C]'
+                    : 'bg-[#F3F2F7] text-[#494459] ring-[#E4E2EC]'
+                }`}
               >
                 <option value="전체">전형: 전체</option>
                 <option value="교과">학생부교과</option>
@@ -543,7 +544,11 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                   setGunFilter(e.target.value);
                   resetPage();
                 }}
-                className="rounded-xl bg-[#F5F2FB] px-2.5 py-1.5 text-xs font-bold text-[#4C4462] ring-1 ring-[#E8E2F4] focus:outline-none"
+                className={`rounded-xl px-2.5 py-1.5 text-xs font-bold ring-1 focus:outline-none transition ${
+                  gunFilter !== '전체'
+                    ? 'bg-[#1F1B2C] text-white ring-[#1F1B2C]'
+                    : 'bg-[#F3F2F7] text-[#494459] ring-[#E4E2EC]'
+                }`}
               >
                 <option value="전체">모집군: 전체</option>
                 <option value="가">가군</option>
@@ -554,12 +559,12 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
           </div>
 
           <div className="flex items-center gap-1.5">
-            <SlidersHorizontal className="h-3.5 w-3.5 text-[#9B93B0]" />
+            <SlidersHorizontal className="h-3.5 w-3.5 text-[#938DA3]" />
             <select
               aria-label="정렬 기준"
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-              className="rounded-xl bg-[#F5F2FB] px-2.5 py-1.5 text-xs font-bold text-[#4C4462] ring-1 ring-[#E8E2F4] focus:outline-none"
+              className="rounded-xl bg-[#F3F2F7] px-2.5 py-1.5 text-xs font-bold text-[#494459] ring-1 ring-[#E4E2EC] focus:outline-none"
             >
               <option value="fit">내 성적 적합순</option>
               <option value="cutHigh">입결 높은순</option>
@@ -571,25 +576,25 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
       </div>
 
       {/* Result Count Caption + Applied Criteria Pill */}
-      <div className="flex flex-wrap items-center justify-between gap-1.5 px-1 text-xs text-[#6F6785]">
+      <div className="flex flex-wrap items-center justify-between gap-1.5 px-1 text-xs text-[#5F5A70]">
         <span className="flex items-center gap-1.5">
-          조회 결과 <strong className="text-[#231E33] tabular-nums">{activeTotal.toLocaleString()}</strong>개 모집단위
-          <span className="rounded-full bg-[#F3EEFC] px-2 py-0.5 text-[10.5px] font-bold text-[#6D5AA8] tabular-nums">
+          조회 결과 <strong className="text-[#1F1B2C] tabular-nums">{activeTotal.toLocaleString()}</strong>개 모집단위
+          <span className="rounded-full bg-[#EAE8F2] px-2.5 py-0.5 text-[10.5px] font-bold text-[#1F1B2C] tabular-nums">
             {mode === 'susi'
               ? `내 상위 누적 ${effectivePct.toFixed(1)}% 기준`
               : `내 모의 백분위 ${profile.mockPct.toFixed(1)} 기준`}
           </span>
         </span>
-        <span className="text-[11px] text-[#BD4F82] font-semibold">
-          카드를 누르면 바텀시트가 열려요
+        <span className="text-[11px] text-[#7A748A] font-semibold">
+          카드를 누르면 상세 바텀시트가 열려요
         </span>
       </div>
 
       {/* 4. Department Cards Grid */}
       {activeTotal === 0 ? (
-        <div className="glass-card rounded-[26px] py-14 text-center ring-1 ring-[#EAE3F7]/90">
-          <p className="text-sm font-bold text-[#3D3554]">조건에 맞는 모집단위가 없어요</p>
-          <p className="mt-1 text-xs text-[#9B93B0]">필터나 검색어를 초기화해 다시 찾아보세요.</p>
+        <div className="glass-card rounded-[24px] py-14 text-center ring-1 ring-[#E6E4EE]">
+          <p className="text-sm font-bold text-[#1F1B2C]">조건에 맞는 모집단위가 없어요</p>
+          <p className="mt-1 text-xs text-[#7A748A]">필터나 검색어를 초기화해 다시 찾아보세요.</p>
           <button
             type="button"
             onClick={() => {
@@ -601,7 +606,7 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
               setOnlyFavs(false);
               setQuery('');
             }}
-            className="mt-4 rounded-xl bg-[#F3EEFC] px-4 py-2 text-xs font-bold text-[#6A57A5] ring-1 ring-[#DFD5F5]"
+            className="mt-4 rounded-xl bg-[#1F1B2C] px-4 py-2 text-xs font-bold text-white"
           >
             필터 전체 초기화
           </button>
@@ -610,8 +615,8 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {finalSusiList.slice(0, visibleCount).map((r) => {
             const theme = UNIV_THEMES[r.u] ?? {
-              badgeBg: 'bg-[#F3EEFC]',
-              badgeText: 'text-[#6A57A5]',
+              badgeBg: 'bg-[#F2F1F7]',
+              badgeText: 'text-[#1F1B2C]',
             };
             const jSt = JUDGMENT_STYLES[r.judgment] ?? JUDGMENT_STYLES['참고(컷미공개)'];
             const isFav = favorites.has(r.favKey);
@@ -631,7 +636,7 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                     judgment: r.judgment,
                   })
                 }
-                className="glass-card group cursor-pointer rounded-[24px] p-4 ring-1 ring-[#EAE3F7]/90 transition hover:ring-[#CBBDF0] active:scale-[0.995]"
+                className="glass-card group cursor-pointer rounded-[22px] p-4 ring-1 ring-[#E6E4EE] transition hover:ring-[#1F1B2C]/35 active:scale-[0.995]"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex flex-wrap items-center gap-1.5">
@@ -640,14 +645,11 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                     >
                       {r.u}
                     </span>
-                    <span className="rounded-lg bg-[#F5F2FB] px-2 py-0.5 text-[11px] font-bold text-[#564D70]">
-                      {r.t}
-                    </span>
-                    <span className="rounded-lg bg-white/80 px-2 py-0.5 text-[11px] font-medium text-[#7B7292] ring-1 ring-[#ECE6F7]">
-                      {r.tr}
+                    <span className="rounded-lg bg-[#F6F5FA] px-2 py-0.5 text-[11px] font-semibold text-[#5F5A70]">
+                      {r.t} · {r.tr}
                     </span>
                     {r.note && (
-                      <span className="rounded-lg bg-[#FDF0F6] px-2 py-0.5 text-[10.5px] font-semibold text-[#BD4F82]">
+                      <span className="rounded-lg bg-[#F6F5FA] px-2 py-0.5 text-[10.5px] font-semibold text-[#686378] ring-1 ring-[#E6E4EE]">
                         {r.note}
                       </span>
                     )}
@@ -667,10 +669,10 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                         e.stopPropagation();
                         onToggleFavorite(r.favKey);
                       }}
-                      className="rounded-full p-1 text-[#C6BED8] transition hover:text-[#DF7BA6]"
+                      className="rounded-full p-1 text-[#C4C0D2] transition hover:text-[#D45D92]"
                     >
                       <Heart
-                        className={`h-4 w-4 ${isFav ? 'fill-[#DB6F9E] text-[#DB6F9E]' : ''}`}
+                        className={`h-4 w-4 ${isFav ? 'fill-[#D45D92] text-[#D45D92]' : ''}`}
                       />
                     </button>
                   </div>
@@ -678,37 +680,37 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
 
                 <div className="mt-2 flex items-baseline justify-between gap-2">
                   <div className="min-w-0">
-                    <h3 className="truncate text-[15.5px] font-extrabold tracking-tight text-[#231E33] group-hover:text-[#6B57A8]">
+                    <h3 className="truncate text-[15.5px] font-extrabold tracking-tight text-[#1F1B2C]">
                       {r.d}
                     </h3>
-                    <p className="truncate text-xs text-[#7D7494]">{r.adm}</p>
+                    <p className="truncate text-xs text-[#7A748A]">{r.adm}</p>
                   </div>
-                  <ChevronRight className="h-4 w-4 shrink-0 text-[#C6BED8] group-hover:text-[#9683D2]" />
+                  <ChevronRight className="h-4 w-4 shrink-0 text-[#C4C0D2] group-hover:text-[#1F1B2C]" />
                 </div>
 
-                {/* Numeric Metric Grid */}
-                <div className="mt-3 grid grid-cols-3 gap-2 rounded-2xl bg-[#F8F6FD] p-2.5 text-center tabular-nums ring-1 ring-[#EFEAF8]">
+                {/* Numeric Metric Grid — Clean neutral box */}
+                <div className="mt-3 grid grid-cols-3 gap-2 rounded-2xl bg-[#F6F5FA] p-2.5 text-center tabular-nums">
                   <div>
-                    <div className="text-[10px] font-semibold text-[#7D7494]">3개년 70%컷(9등급)</div>
-                    <div className="mt-0.5 text-sm font-extrabold text-[#231E33]">
+                    <div className="text-[10px] font-semibold text-[#686378]">3개년 70%컷(9등급)</div>
+                    <div className="mt-0.5 text-sm font-extrabold text-[#1F1B2C]">
                       {r.avg !== null ? `${r.avg.toFixed(2)}등급` : '-'}
                     </div>
-                    <div className="text-[9.5px] font-medium text-[#9B93B0]">과거 9등급제</div>
+                    <div className="text-[9.5px] font-medium text-[#938DA3]">과거 9등급제</div>
                   </div>
                   <div>
-                    <div className="text-[10px] font-semibold text-[#7D7494]">환산 상위 누적</div>
-                    <div className="mt-0.5 text-sm font-extrabold text-[#7561B4]">
+                    <div className="text-[10px] font-semibold text-[#686378]">환산 상위 누적</div>
+                    <div className="mt-0.5 text-sm font-extrabold text-[#6350A8]">
                       {r.reqPct !== null ? `상위 ${r.reqPct.toFixed(1)}%` : '-'}
                     </div>
-                    <div className="text-[9.5px] font-bold text-[#BD4F82]">
+                    <div className="text-[9.5px] font-bold text-[#5F5A70]">
                       {r.g5Label ? `현 5등급: ${r.g5Label.split(' ')[0]}` : '-'}
                     </div>
                   </div>
                   <div>
-                    <div className="text-[10px] font-semibold text-[#7D7494]">내 상위% 대비</div>
+                    <div className="text-[10px] font-semibold text-[#686378]">내 상위% 대비</div>
                     <div
                       className={`mt-0.5 text-xs font-extrabold ${
-                        r.diffPct !== null && r.diffPct >= -0.05 ? 'text-[#287B6C]' : 'text-[#BD4F82]'
+                        r.diffPct !== null && r.diffPct >= -0.05 ? 'text-[#1D6E5C]' : 'text-[#B53F74]'
                       }`}
                     >
                       {r.diffPct === null
@@ -719,21 +721,21 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                             ? `+${r.diffPct.toFixed(1)}%p 여유`
                             : `${r.diffPct.toFixed(1)}%p 부족`}
                     </div>
-                    <div className="text-[9.5px] font-medium text-[#9B93B0]">내 {effectivePct.toFixed(1)}% 비교</div>
+                    <div className="text-[9.5px] font-medium text-[#938DA3]">내 {effectivePct.toFixed(1)}% 비교</div>
                   </div>
                 </div>
 
                 {/* Bottom 3-year mini timeline */}
-                <div className="mt-2.5 flex items-center justify-between text-[11px] text-[#7D7494] tabular-nums px-0.5">
+                <div className="mt-2.5 flex items-center justify-between text-[11px] text-[#7A748A] tabular-nums px-0.5">
                   <span>
-                    <span className="font-semibold text-[#8A7FB0]">9등급 컷</span>{' '}
+                    <span className="font-semibold text-[#5F5A70]">9등급 컷</span>{' '}
                     24년 <strong>{r.c24 !== null ? r.c24.toFixed(2) : '-'}</strong> → 25년{' '}
                     <strong>{r.c25 !== null ? r.c25.toFixed(2) : '-'}</strong> → 26년{' '}
-                    <strong className="text-[#231E33]">
+                    <strong className="text-[#1F1B2C]">
                       {r.c26 !== null ? r.c26.toFixed(2) : '-'}
                     </strong>
                   </span>
-                  <span className="font-semibold text-[#665D7E]">{r.trend}</span>
+                  <span className="font-semibold text-[#5F5A70]">{r.trend}</span>
                 </div>
               </div>
             );
@@ -743,8 +745,8 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {finalJeongsiList.slice(0, visibleCount).map((r) => {
             const theme = UNIV_THEMES[r.u] ?? {
-              badgeBg: 'bg-[#E9F5F8]',
-              badgeText: 'text-[#2C747E]',
+              badgeBg: 'bg-[#F2F1F7]',
+              badgeText: 'text-[#1F1B2C]',
             };
             const jSt = JUDGMENT_STYLES[r.judgment] ?? JUDGMENT_STYLES['참고(미공개)'];
             const isFav = favorites.has(r.favKey);
@@ -764,7 +766,7 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                     judgment: r.judgment,
                   })
                 }
-                className="glass-card group cursor-pointer rounded-[24px] p-4 ring-1 ring-[#EAE3F7]/90 transition hover:ring-[#B6DCE8] active:scale-[0.995]"
+                className="glass-card group cursor-pointer rounded-[22px] p-4 ring-1 ring-[#E6E4EE] transition hover:ring-[#1F1B2C]/35 active:scale-[0.995]"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex flex-wrap items-center gap-1.5">
@@ -773,11 +775,8 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                     >
                       {r.u}
                     </span>
-                    <span className="rounded-lg bg-[#E9F5F8] px-2 py-0.5 text-[11px] font-extrabold text-[#296E7E]">
-                      {r.gun}군
-                    </span>
-                    <span className="rounded-lg bg-white/80 px-2 py-0.5 text-[11px] font-medium text-[#7B7292] ring-1 ring-[#ECE6F7]">
-                      {r.tr}
+                    <span className="rounded-lg bg-[#F6F5FA] px-2 py-0.5 text-[11px] font-semibold text-[#5F5A70]">
+                      {r.gun}군 · {r.tr}
                     </span>
                   </div>
 
@@ -795,10 +794,10 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                         e.stopPropagation();
                         onToggleFavorite(r.favKey);
                       }}
-                      className="rounded-full p-1 text-[#C6BED8] transition hover:text-[#DF7BA6]"
+                      className="rounded-full p-1 text-[#C4C0D2] transition hover:text-[#D45D92]"
                     >
                       <Heart
-                        className={`h-4 w-4 ${isFav ? 'fill-[#DB6F9E] text-[#DB6F9E]' : ''}`}
+                        className={`h-4 w-4 ${isFav ? 'fill-[#D45D92] text-[#D45D92]' : ''}`}
                       />
                     </button>
                   </div>
@@ -806,34 +805,34 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
 
                 <div className="mt-2 flex items-baseline justify-between gap-2">
                   <div className="min-w-0">
-                    <h3 className="truncate text-[15.5px] font-extrabold tracking-tight text-[#231E33] group-hover:text-[#296E7E]">
+                    <h3 className="truncate text-[15.5px] font-extrabold tracking-tight text-[#1F1B2C]">
                       {r.d}
                     </h3>
-                    <p className="truncate text-xs text-[#7D7494]">{r.adm}</p>
+                    <p className="truncate text-xs text-[#7A748A]">{r.adm}</p>
                   </div>
-                  <ChevronRight className="h-4 w-4 shrink-0 text-[#C6BED8] group-hover:text-[#589EB0]" />
+                  <ChevronRight className="h-4 w-4 shrink-0 text-[#C4C0D2] group-hover:text-[#1F1B2C]" />
                 </div>
 
-                <div className="mt-3 grid grid-cols-3 gap-2 rounded-2xl bg-[#F2F9FB] p-2.5 text-center tabular-nums ring-1 ring-[#DCEEF3]">
+                <div className="mt-3 grid grid-cols-3 gap-2 rounded-2xl bg-[#F6F5FA] p-2.5 text-center tabular-nums">
                   <div>
-                    <div className="text-[10px] font-semibold text-[#6B8088]">국수탐 백분위 70%컷</div>
-                    <div className="mt-0.5 text-sm font-extrabold text-[#256776]">
+                    <div className="text-[10px] font-semibold text-[#686378]">국수탐 백분위 70%컷</div>
+                    <div className="mt-0.5 text-sm font-extrabold text-[#1F1B2C]">
                       {r.avg !== null ? `${r.avg.toFixed(2)}` : '-'}
                     </div>
-                    <div className="text-[9.5px] font-medium text-[#7D959E]">높을수록 상위</div>
+                    <div className="text-[9.5px] font-medium text-[#938DA3]">높을수록 상위</div>
                   </div>
                   <div>
-                    <div className="text-[10px] font-semibold text-[#6B8088]">내 모의 백분위</div>
-                    <div className="mt-0.5 text-sm font-extrabold text-[#231E33]">
+                    <div className="text-[10px] font-semibold text-[#686378]">내 모의 백분위</div>
+                    <div className="mt-0.5 text-sm font-extrabold text-[#6350A8]">
                       {profile.mockPct.toFixed(1)}
                     </div>
-                    <div className="text-[9.5px] font-medium text-[#7D959E]">만점 100</div>
+                    <div className="text-[9.5px] font-medium text-[#938DA3]">만점 100</div>
                   </div>
                   <div>
-                    <div className="text-[10px] font-semibold text-[#6B8088]">백분위 차이</div>
+                    <div className="text-[10px] font-semibold text-[#686378]">백분위 차이</div>
                     <div
                       className={`mt-0.5 text-xs font-extrabold ${
-                        r.diffPct !== null && r.diffPct >= 0 ? 'text-[#287B6C]' : 'text-[#BD4F82]'
+                        r.diffPct !== null && r.diffPct >= 0 ? 'text-[#1D6E5C]' : 'text-[#B53F74]'
                       }`}
                     >
                       {r.diffPct === null
@@ -842,20 +841,20 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
                           ? `+${r.diffPct.toFixed(1)}p 여유`
                           : `${r.diffPct.toFixed(1)}p 부족`}
                     </div>
-                    <div className="text-[9.5px] font-medium text-[#7D959E]">3개년 70%컷 대비</div>
+                    <div className="text-[9.5px] font-medium text-[#938DA3]">3개년 70%컷 대비</div>
                   </div>
                 </div>
 
-                <div className="mt-2.5 flex items-center justify-between text-[11px] text-[#7D7494] tabular-nums px-0.5">
+                <div className="mt-2.5 flex items-center justify-between text-[11px] text-[#7A748A] tabular-nums px-0.5">
                   <span>
-                    <span className="font-semibold text-[#478191]">백분위 70%</span>{' '}
+                    <span className="font-semibold text-[#5F5A70]">백분위 70%</span>{' '}
                     24년 <strong>{r.p24 !== null ? r.p24.toFixed(1) : '-'}</strong> → 25년{' '}
                     <strong>{r.p25 !== null ? r.p25.toFixed(1) : '-'}</strong> → 26년{' '}
-                    <strong className="text-[#231E33]">
+                    <strong className="text-[#1F1B2C]">
                       {r.p26 !== null ? r.p26.toFixed(1) : '-'}
                     </strong>
                   </span>
-                  <span className="font-semibold text-[#665D7E]">{r.trend}</span>
+                  <span className="font-semibold text-[#5F5A70]">{r.trend}</span>
                 </div>
               </div>
             );
@@ -868,7 +867,7 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
         <button
           type="button"
           onClick={() => setVisibleCount((c) => c + 48)}
-          className="glass-card w-full rounded-2xl py-3.5 text-xs font-extrabold text-[#6D5AA8] ring-1 ring-[#E6DFF5] transition hover:bg-[#F5F0FD]"
+          className="glass-card w-full rounded-2xl py-3.5 text-xs font-extrabold text-[#1F1B2C] ring-1 ring-[#E6E4EE] transition hover:bg-[#F3F2F7]"
         >
           더 보기 ({visibleCount.toLocaleString()} / {activeTotal.toLocaleString()})
         </button>
