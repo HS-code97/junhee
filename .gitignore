@@ -1,0 +1,21 @@
+# Dependencies & build outputs
+node_modules/
+web/node_modules/
+web/dist/
+.vite/
+
+# Python cache
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local raw crawled archives & scratch ego scripts (preserved locally on disk)
+입결DB_2029맞춤_서울13개교/raw_data/
+입결DB_2029맞춤_서울13개교/scripts/ego/
+입결DB_2029맞춤_서울13개교/intermediate/plan2028_extracts/
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+~$*.xlsx

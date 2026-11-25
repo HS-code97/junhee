@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#EEF2FF" />
+      <stop offset="50%" stop-color="#F5F3FF" />
+      <stop offset="100%" stop-color="#FFF1F2" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#4F46E5" />
+      <stop offset="100%" stop-color="#EC4899" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#g1)" />
+  <circle cx="1040" cy="120" r="210" fill="#DDD6FE" fill-opacity="0.45" />
+  <circle cx="160" cy="540" r="190" fill="#FECDD3" fill-opacity="0.4" />
+  <rect x="76" y="72" width="1048" height="486" rx="36" fill="white" fill-opacity="0.88" stroke="#E0E7FF" stroke-width="2" />
+  <rect x="132" y="132" width="290" height="44" rx="22" fill="#EEF2FF" />
+  <text x="277" y="161" text-anchor="middle" fill="#4F46E5" font-family="Pretendard, Apple SD Gothic Neo, Malgun Gothic, sans-serif" font-size="20" font-weight="700">✦ SURYEON'S COMPASS 2029</text>
+  <text x="132" y="256" fill="#191F28" font-family="Pretendard, Apple SD Gothic Neo, Malgun Gothic, sans-serif" font-size="54" font-weight="800">수련이의 스무 살 봄을 응원하며</text>
+  <text x="132" y="328" fill="#4E5968" font-family="Pretendard, Apple SD Gothic Neo, Malgun Gothic, sans-serif" font-size="28" font-weight="500">서울 주요 13개 대학 3개년(2024~2026) 공식 수시·정시 입결 &amp;</text>
+  <text x="132" y="370" fill="#4E5968" font-family="Pretendard, Apple SD Gothic Neo, Malgun Gothic, sans-serif" font-size="28" font-weight="500">2028 대입개편(내신 5등급제 · 통합수능) 맞춤 비교 시뮬레이터</text>
+  <line x1="132" y1="432" x2="1068" y2="432" stroke="#E5E8EB" stroke-width="1.5" />
+  <text x="132" y="492" fill="#6B7684" font-family="Pretendard, Apple SD Gothic Neo, Malgun Gothic, sans-serif" font-size="23" font-weight="600">동탄에서, 언제나 수련이 편인 아빠 김준희가 정성껏 담은 입시 노트</text>
+  <rect x="860" y="456" width="208" height="52" rx="26" fill="url(#accent)" />
+  <text x="964" y="489" text-anchor="middle" fill="white" font-family="Pretendard, Apple SD Gothic Neo, Malgun Gothic, sans-serif" font-size="21" font-weight="700">6,545건 공식 DB</text>
+</svg>
