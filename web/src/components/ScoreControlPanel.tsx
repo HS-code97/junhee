@@ -44,6 +44,9 @@ export const ScoreControlPanel: React.FC<ScoreControlPanelProps> = ({ profile, o
   const [g5Text, setG5Text] = useState(profile.grade5.toFixed(2));
   const [cumText, setCumText] = useState(appliedCum.toFixed(1));
   const [mockText, setMockText] = useState(profile.mockPct.toFixed(1));
+  const [cumAutoSynced, setCumAutoSynced] = useState(
+    Math.abs(appliedCum - clampCumPct(grade5ToCumPct(profile.grade5))) < 0.06
+  );
 
   // Sync draft when external profile changes
   useEffect(() => {
@@ -51,6 +54,7 @@ export const ScoreControlPanel: React.FC<ScoreControlPanelProps> = ({ profile, o
     setG5Text(profile.grade5.toFixed(2));
     setCumText(nextCum.toFixed(1));
     setMockText(profile.mockPct.toFixed(1));
+    setCumAutoSynced(Math.abs(nextCum - clampCumPct(grade5ToCumPct(profile.grade5))) < 0.06);
   }, [profile]);
 
   const parsedG5 = (() => {
@@ -77,12 +81,26 @@ export const ScoreControlPanel: React.FC<ScoreControlPanelProps> = ({ profile, o
 
   const stepGrade5 = (delta: number) => {
     const nextG5 = clampGrade5(parsedG5 + delta);
+    const syncedCum = clampCumPct(grade5ToCumPct(nextG5));
     setG5Text(nextG5.toFixed(2));
+    setCumText(syncedCum.toFixed(1));
+    setCumAutoSynced(true);
+  };
+
+  const handleGrade5InputChange = (raw: string) => {
+    setG5Text(raw);
+    const num = parseFloat(raw);
+    if (!Number.isNaN(num) && num >= 1 && num <= 5) {
+      const syncedCum = clampCumPct(grade5ToCumPct(clampGrade5(num)));
+      setCumText(syncedCum.toFixed(1));
+      setCumAutoSynced(true);
+    }
   };
 
   const stepCumPct = (delta: number) => {
     const nextCum = clampCumPct(parsedCum + delta);
     setCumText(nextCum.toFixed(1));
+    setCumAutoSynced(false);
   };
 
   const stepMockPct = (delta: number) => {
@@ -111,6 +129,7 @@ export const ScoreControlPanel: React.FC<ScoreControlPanelProps> = ({ profile, o
     setG5Text('1.15');
     setCumText('7.5');
     setMockText('94.0');
+    setCumAutoSynced(true);
   };
 
   const zResult = estimateTopPctFromZScore(
@@ -212,8 +231,13 @@ export const ScoreControlPanel: React.FC<ScoreControlPanelProps> = ({ profile, o
                     max="5"
                     aria-label="5등급제 내신 평균"
                     value={g5Text}
-                    onChange={(e) => setG5Text(e.target.value)}
-                    onBlur={() => setG5Text(parsedG5.toFixed(2))}
+                    onChange={(e) => handleGrade5InputChange(e.target.value)}
+                    onBlur={() => {
+                      setG5Text(parsedG5.toFixed(2));
+                      if (cumAutoSynced) {
+                        setCumText(clampCumPct(grade5ToCumPct(parsedG5)).toFixed(1));
+                      }
+                    }}
                     className="h-9 w-full rounded-xl bg-white/95 px-2 text-center text-sm font-extrabold text-[#2E2547] tabular-nums ring-1 ring-[#DED4F4] focus:ring-2 focus:ring-[#9E8CD8] focus:outline-none"
                   />
                   <button
@@ -226,20 +250,31 @@ export const ScoreControlPanel: React.FC<ScoreControlPanelProps> = ({ profile, o
                   </button>
                 </div>
                 <div className="mt-1.5 text-[10.5px] text-[#786E92] tabular-nums">
-                  현 고1 5등급 기준 · 자동환산 상위 <strong>{autoInterpFromDraftG5.toFixed(1)}%</strong>
+                  현 고1 5등급 · 변경 시 ②번 자동연동 (<strong>{autoInterpFromDraftG5.toFixed(1)}%</strong>)
                 </div>
               </div>
 
               {/* Input 2: 추정 상위 누적 백분위(%) */}
               <div className="rounded-2xl bg-[#FDF2F7]/90 p-3 ring-1 ring-[#F5D6E6]">
                 <div className="flex items-center justify-between gap-1">
-                  <label className="text-xs font-extrabold text-[#2B2440]">
-                    ② 추정 상위 누적(%)
-                  </label>
+                  <div className="flex items-center gap-1.5 min-w-0">
+                    <label className="text-xs font-extrabold text-[#2B2440] truncate">
+                      ② 추정 상위 누적(%)
+                    </label>
+                    <span
+                      className={`shrink-0 rounded-full px-1.5 py-0.5 text-[9.5px] font-bold ${
+                        cumAutoSynced
+                          ? 'bg-white/80 text-[#7A67B8] ring-1 ring-[#E6DCF8]'
+                          : 'bg-[#FCE3EF] text-[#BD4F82]'
+                      }`}
+                    >
+                      {cumAutoSynced ? '①자동연동' : '직접입력'}
+                    </span>
+                  </div>
                   <button
                     type="button"
                     onClick={() => setShowCalc((v) => !v)}
-                    className="inline-flex items-center gap-1 rounded-lg bg-[#FCE3EF] px-2 py-0.5 text-[10.5px] font-bold text-[#B6497C] transition hover:bg-[#F9D3E6]"
+                    className="inline-flex shrink-0 items-center gap-1 rounded-lg bg-[#FCE3EF] px-2 py-0.5 text-[10.5px] font-bold text-[#B6497C] transition hover:bg-[#F9D3E6]"
                   >
                     <Calculator className="h-3 w-3" />
                     Z계산기
@@ -262,7 +297,10 @@ export const ScoreControlPanel: React.FC<ScoreControlPanelProps> = ({ profile, o
                     max="100"
                     aria-label="추정 상위 누적 백분위"
                     value={cumText}
-                    onChange={(e) => setCumText(e.target.value)}
+                    onChange={(e) => {
+                      setCumText(e.target.value);
+                      setCumAutoSynced(false);
+                    }}
                     onBlur={() => setCumText(parsedCum.toFixed(1))}
                     className="h-9 w-full rounded-xl bg-white/95 px-2 text-center text-sm font-extrabold text-[#9A3867] tabular-nums ring-1 ring-[#F2CEE0] focus:ring-2 focus:ring-[#DC77A6] focus:outline-none"
                   />
@@ -276,16 +314,21 @@ export const ScoreControlPanel: React.FC<ScoreControlPanelProps> = ({ profile, o
                   </button>
                 </div>
                 <div className="mt-1.5 flex items-center justify-between text-[10.5px] text-[#8B6278]">
-                  <span>수시 정밀판정 (낮을수록 상위)</span>
-                  <button
-                    type="button"
-                    onClick={() => setCumText(autoInterpFromDraftG5.toFixed(1))}
-                    className="inline-flex items-center gap-0.5 font-bold text-[#BD4F82] hover:underline"
-                    title="①번 5등급 내신 기준 자동 환산값 채우기"
-                  >
-                    <RefreshCw className="h-2.5 w-2.5" />
-                    ①내신 자동환산({autoInterpFromDraftG5.toFixed(1)}%)
-                  </button>
+                  <span>낮을수록 상위 · 미세조정 가능</span>
+                  {!cumAutoSynced && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCumText(autoInterpFromDraftG5.toFixed(1));
+                        setCumAutoSynced(true);
+                      }}
+                      className="inline-flex items-center gap-0.5 font-bold text-[#BD4F82] hover:underline"
+                      title="①번 5등급 내신 기준 자동 환산값으로 되돌리기"
+                    >
+                      <RefreshCw className="h-2.5 w-2.5" />
+                      ①연동복구({autoInterpFromDraftG5.toFixed(1)}%)
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -394,6 +437,7 @@ export const ScoreControlPanel: React.FC<ScoreControlPanelProps> = ({ profile, o
                       type="button"
                       onClick={() => {
                         setCumText(zResult.topPct.toFixed(1));
+                        setCumAutoSynced(false);
                         setShowCalc(false);
                       }}
                       className="rounded-xl bg-[#D96B9C] px-3 py-1 text-xs font-bold text-white transition hover:bg-[#C65B8B]"
